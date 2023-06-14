@@ -30,7 +30,7 @@
 				</tr>
 				<tr>
 					<td><label for="dept-select">所属</label></td>
-					<td><select name="dept" th:field="*{dept}" id="dept-select">
+					<td><select name="dept" th:field="*{dept}" id="dept-select" >
 							<option value="">--Please choose an option--</option>
 							<option value="第一部">第一部</option>
 							<option value="第二部">第二部</option>
@@ -40,9 +40,9 @@
 				<tr>
 					<td><label for="gender">性別</label></td>
 					<td><input type="radio" th:field="*{gender}" name="gender"
-						id="men" value="男"></td>
+						id="men" value="男">男</td>
 					<td><input type="radio" th:field="*{gender}" name="gender"
-						id="weman" value="女"></td>
+						id="weman" value="女">女</td>
 				</tr>
 
 				<tr>

@@ -31,19 +31,19 @@
 				</tr>
 				<tr>
 					<td><label for="dept-select">所属</label></td>
-					<td><select name="dept" th:field="*{dept}" id="dept-select">
+					<td><select name="dept" th:field="*{dept}" id="dept-select" th:checked="${dept}">
 							<option value="">--Please choose an option--</option>
-							<option value="第一部">第一部</option>
-							<option value="第二部">第二部</option>
-							<option value="第三部">第三部</option>
+							<option value="第一部" th:selected="${dept == '第一部'}">第一部</option>
+							<option value="第二部" th:selected="${dept == '第二部'}">第二部</option>
+							<option value="第三部" th:selected="${dept == '第三部'}">第三部</option>
 					</select></td>
 				</tr>
 				<tr>
 					<td><label for="gender">性別</label></td>
 					<td><input type="radio" th:field="*{gender}" name="gender"
-						id="men" value="男" th:checked="${gender == '男'}"></td>
+						id="men" value="男" th:checked="${gender == '男'}">男</td>
 					<td><input type="radio" th:field="*{gender}" name="gender"
-						id="women" value="女" th:checked="${gender == '女'}"></td>
+						id="women" value="女" th:checked="${gender == '女'}">女</td>
 				</tr>
 
 				<tr>
