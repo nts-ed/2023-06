@@ -1,85 +1,147 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>社員情報登録・更新</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>勤怠管理システム</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-image: url("/images/bg.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        margin-top: 100px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+        font-size: 24px;
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    .logo {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 1;
+    }
+
+    .logo img {
+        width: 250px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        background-color: #edede9;
+    }
+
+    .form-group .button-wrapper {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .form-group .button-wrapper button {
+        flex-grow: 1;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .form-group .button-wrapper .login-button {
+        background-color: rgb(255, 128, 0);
+        color: #fff;
+        margin-right: 5px;
+    }
+
+    .form-group .button-wrapper .close-button {
+        background-color: rgb(255, 128, 64);
+        color: #fff;
+        margin-left: 5px;
+    }
+</style>
 </head>
 <body>
-	<div class="header"></div>
-	<div class="main">
-		<div th:if="${errors}">
-			<ul>
-				<li th:each="error : ${errors}"><span
-					th:text="${error.defaultMessage}"></span></li>
-			</ul>
-		</div>
-
-		<form th:action="@{/empl/add}" th:object="${infoForm}"
-			th:method="post">
-
-
-			<table>
-				<tr>
-					<td><label for="id">社員ID</label></td>
-					<td><input type="text" name="id" th:value="*{id}" readonly></td>
-				</tr>
-				<tr>
-					<td><label for="name">氏名</label></td>
-					<td><input type="text" th:field="*{name}" id="name"></td>
-				</tr>
-				<tr>
-					<td><label for="dept-select">所属</label></td>
-					<td><select name="dept" th:field="*{dept}" id="dept-select">
-							<option value="">--Please choose an option--</option>
-							<option value="第一部">第一部</option>
-							<option value="第二部">第二部</option>
-							<option value="第三部">第三部</option>
-					</select></td>
-				</tr>
-				<tr>
-					<td><label for="gender">性別</label></td>
-					<td><input type="radio" th:field="*{gender}" name="gender"
-						id="men" value="男"></td>
-					<td><input type="radio" th:field="*{gender}" name="gender"
-						id="weman" value="女"></td>
-				</tr>
-
-				<tr>
-					<td><label for="phoneNum">電話番号</label></td>
-					<td><input type="text" th:field="*{phone_Number}"
-						name="phoneNum"></td>
-				</tr>
-
-				<tr>
-					<td><label for="entryDate">入社年月日</label></td>
-					<td><input type="date" th:field="*{entry_Date}"name="entryDate"></td>
-				</tr>
-				<tr>
-				<td><label for="age">年齢</label></td>
-				<td><input type ="text" th:field="*{age}" name="age"></td>
-				</tr>
-
-				<tr>
-					<td><label for="email">メールアドレス</label></td>
-					<td><input type="email" th:field="*{email}" name="email"></td>
-				</tr>
-
-				<tr>
-					<td><input type="submit" name="add" value="登録"></td>
-				</tr>
-
-				<tr>
-					<td><input type="submit" name="update" value="更新"></td>
-					<td><input type="submit" name="close" value="閉じる"></td>
-				</tr>
-
-			</table>
-		</form>
-	</div>
-
-	<div class="footer"></div>
-
-
+<div class="container">
+    <div class="logo">
+        <img src="/images/logo.png" alt="Logo" width="250">
+    </div>
+    <h2>勤怠管理システム</h2>
+   
+        <div class="form-group">
+            <label for="logname">社員ID</label>
+            <input type="text" id="id" name="id" placeholder="社員番号" required>
+        </div>
+        <div class="form-group">
+            <label for="logpwd">パスワード</label>
+            <input type="password" id="password" name="password" placeholder="パスワード" required>
+        </div>
+        <div class="form-group">
+            <div class="button-wrapper">
+           <button id="loginBtn"  type="button" class="login-button" onclick="login()">ログイン</button>
+            </div>
+        </div>
+</div>
+<script>
+function login() {
+    const id = document.getElementById("id").value;
+    const  password= document.getElementById("password").value;
+    if (!id || !password) {
+        alert("社員IDまたパスワードを入力してください。");
+        return;
+    }
+    fetch('/login', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8"
+        },
+        body: JSON.stringify({ id: id, password: password })
+    }).then(res =>res.text()).then(data=>{       
+    	 if (data === "success") {
+             alert("ログイン成功");
+             location.href = '/foword.html';
+         } else if (data === "incorrect_id") {
+             alert("社員IDが違います。");
+         } else if (data === "incorrect_password") {
+             alert("パスワードが違います。");
+         } else {
+             alert("ログイン失敗");
+         }
+     }).catch(error => {
+         console.log(error);
+         alert("ログイン失敗");
+     });
+ }
+</script> 
 </body>
 </html>
