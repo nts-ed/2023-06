@@ -1,30 +1,44 @@
-package com.nts._ed.ks.controller;
+package com.example.demo;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.nts._ed.ks.repository.EmployeeRepository;
-
-@RestController
-@RequestMapping("/employees")
+@Controller
 public class EmployeeController {
+    private final DataSource dataSource;
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
-    @GetMapping
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+    public EmployeeController(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
-    @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable Long id) {
-        return employeeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid employee ID: " + id));
+    @GetMapping("/employee")
+    public String getEmployeeData(Model model) {
+        try (Connection connection = dataSource.getConnection()) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM  t_attendance_ym");
+
+            List<Employee> employees = new ArrayList<>();
+            while (resultSet.next()) {
+                int employeeId = resultSet.getInt("employee_id");
+                int workHours = resultSet.getInt("work_hours");
+                int overtimeHours = resultSet.getInt("overtime_hours");
+
+                employees.add(new Employee(employeeId, workHours, overtimeHours));
+            }
+
+            model.addAttribute("employees", employees);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "employee";
     }
 }
