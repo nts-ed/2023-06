@@ -1,44 +1,27 @@
-package com.example.demo;
+package com.nts._ed.ks.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
-@Controller
-public class EmployeeController {
-    private final DataSource dataSource;
+@PutMapping("/employees/{id}")
+public T_EMPLOYEES updateEmployee(@PathVariable Long id, @RequestBody UpdateParam updateParam) {
+    Employee existingEmployee = employeeRepository.findById(id).orElse(null);
 
-    public EmployeeController(DataSource dataSource) {
-        this.dataSource = dataSource;
+    if (existingEmployee != null) {
+        existingEmployee.setFirstName(updateParam.getFirstName());
+        existingEmployee.setLastName(updateParam.getLastName());
+        existingEmployee.setPosition(updateParam.getPosition());
+
+        Employee updatedEmployee = employeeRepository.save(existingEmployee);
+
+        EmployeeDto responseDto = new EmployeeDto();
+        responseDto.setFirstName(updatedEmployee.getFirstName());
+        responseDto.setLastName(updatedEmployee.getLastName());
+        responseDto.setPosition(updatedEmployee.getPosition());
+
+        return responseDto;
     }
 
-    @GetMapping("/employee")
-    public String getEmployeeData(Model model) {
-        try (Connection connection = dataSource.getConnection()) {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM  t_attendance_ym");
-
-            List<Employee> employees = new ArrayList<>();
-            while (resultSet.next()) {
-                int employeeId = resultSet.getInt("employee_id");
-                int workHours = resultSet.getInt("work_hours");
-                int overtimeHours = resultSet.getInt("overtime_hours");
-
-                employees.add(new Employee(employeeId, workHours, overtimeHours));
-            }
-
-            model.addAttribute("employees", employees);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return "employee";
-    }
+    return null;
+    
+	}
 }
