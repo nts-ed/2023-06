@@ -64,6 +64,8 @@ public class Info implements Serializable{
 	@Column(name="UPDATE_USERID")
 	private int update_userId;
 	
+	
+	
 
 	public Info() {
 		
