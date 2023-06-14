@@ -6,7 +6,7 @@ import com.example.demo.trySpring.TEST.copy.Prefectures;
 import java.util.List;
 @Repository
 public interface  PrefecturesRepository extends JpaRepository<Prefectures, Long>{
-@Query(value = "select * from TEST01.M_DEPT ", nativeQuery = true)
+@Query(value = "select * from group2.M_DEPT ", nativeQuery = true)
 List<Prefectures> findAll();
 
 }

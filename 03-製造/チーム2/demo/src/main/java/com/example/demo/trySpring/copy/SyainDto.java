@@ -10,14 +10,14 @@ import lombok.Data;
 //@Entity
 //@AllArgsConstructor
 public class SyainDto implements Serializable{
-    private String user_Id;//ユーザー
-    private String name;//氏名
-    private String affiliation;//所属
-    private String sex;//性別
+    private String employee_id;//社員ID
+    private String employee_name;//社員名称
+    private String dept_id;//所属部門ID 
+    private String gender;//性別
     private String telephone_number;//電話番号
-    private String calendar_date;//入社年月日
+    private String entry_date;//入社年月日
     private int age;//年齢
-    private String mail_address;//メールアドレス
+    private String mail_add;//メールアドレス
 //    private String create_date;//作成日時
 //    private String create_user;//作成者
 //    private String update_date;//更新日時

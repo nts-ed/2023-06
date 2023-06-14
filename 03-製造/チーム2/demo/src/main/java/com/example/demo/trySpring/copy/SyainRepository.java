@@ -18,7 +18,7 @@ public class SyainRepository {
 					"INSERT INTO TEST01.T_USERS"
 					+ "(USER＿ID,NAME) "
 					+ "Values(?,?)",
-					syain.getUser_Id(), syain.getName());
+					syain.getEmployee_id(), syain.getEmployee_name());
 		}
 	}
 
@@ -26,7 +26,7 @@ public class SyainRepository {
 		String date_conversion="";
 		try {
 			//String dateStringsss = "2022-12-22";
-			String dateStringsss = syainDto.getCalendar_date();
+			String dateStringsss = syainDto.getEntry_date();
 			//Dateに変換
 	        SimpleDateFormat exDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	        Date sssss = exDateFormat.parse(dateStringsss);
@@ -38,19 +38,19 @@ public class SyainRepository {
 			System.out.println(e);
 		}
 		jdbcTemplate.update(
-				"UPDATE TEST01.T_USERS SET "
-				+ "SEX='"+syainDto.getSex()+"'"
-				+ "TELEPHONE_NUMBER='"+syainDto.getTelephone_number()+"'"
-				+ "CALENDAR_DATE='"+date_conversion+"'"
-				+ "AGE='"+syainDto.getAge()+"'"
-				+ "MAIL_ADDRESS='"+syainDto.getMail_address()+"'"
-				+ "AFFILIATION='"+syainDto.getAffiliation()+"'"
-				+ "NAME='"+syainDto.getName()+"'" 
-				+ "where USER＿ID='"+syainDto.getUser_Id()+"'");
+				"UPDATE group2.T_EMPLOYEE SET "
+				+ "GENDER='"+syainDto.getGender()+"',"
+				+ "TELEPHONE_NUMBER='"+syainDto.getTelephone_number()+"',"
+				+ "ENTRY_DATE='"+date_conversion+"',"
+				+ "AGE='"+syainDto.getAge()+"',"
+				+ "MAIL_ADD='"+syainDto.getMail_add()+"',"
+				+ "DEPT_ID='"+syainDto.getDept_id()+"',"
+				+ "EMPLOYEE_NAME='"+syainDto.getEmployee_name()+"'" 
+				+ "where EMPLOYEE_ID='"+syainDto.getEmployee_id()+"'");
 	}
 
 	public void deleteSyain(SyainDto syainList) {
 		jdbcTemplate.update("DELETE FROM syain where id = ?" ,
-				syainList.getUser_Id());
+				syainList.getEmployee_id());
 	}
 }

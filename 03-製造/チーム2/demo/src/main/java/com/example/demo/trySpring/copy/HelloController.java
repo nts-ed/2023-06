@@ -66,21 +66,21 @@ public class HelloController {
 	public String test(Model model) {
  		//SQL取得にに仕様する
 		String sql = "SELECT * "
-				+ "FROM TEST01.T_USERS where USER＿ID = '00001'";
+				+ "FROM group2.T_EMPLOYEE where EMPLOYEE_ID = '00001'";
 		//取得したDBを格納する
 		Map<String, Object> map = jdbcTemplate.queryForMap(sql);
-		model.addAttribute("user_id", map.get("USER＿ID"));//氏名
-		model.addAttribute("NAME", map.get("name"));//氏名
+		model.addAttribute("employee_id", map.get("EMPLOYEE_ID"));//社員ID
+		model.addAttribute("employee_name", map.get("EMPLOYEE_NAME"));//氏名
 		model.addAttribute("age", map.get("age"));//年齢
 		//性別
-		if("男".equals(map.get("SEX"))) {
+		if("男".equals(map.get("GENDER"))) {
 			model.addAttribute("Man", "checked");
-		}else if("女".equals(map.get("SEX"))) {
+		}else if("女".equals(map.get("GENDER"))) {
 			model.addAttribute("woman", "checked");
 		}
-		model.addAttribute("MAIL_ADDRESS", map.get("MAIL_ADDRESS"));//メールアドレス
+		model.addAttribute("MAIL_ADDRESS", map.get("MAIL_ADD"));//メールアドレス
 		model.addAttribute("telephone_number", map.get("TELEPHONE_NUMBER"));//電話番号
-		String dateString = map.get("CALENDAR_DATE").toString();
+		String dateString = map.get("ENTRY_DATE").toString();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         LocalDate date = LocalDate.parse(dateString, formatter);
         System.out.print(date);
@@ -91,7 +91,7 @@ public class HelloController {
 		List<Prefectures> prefecturesList = testService.getPrefecturesAll();
         model.addAttribute("prefecturesList", prefecturesList);
         // プルダウンの初期値を設定する場合は指定
-        model.addAttribute("selectedValue", map.get("AFFILIATION"));//所属ID
+        model.addAttribute("selectedValue", map.get("DEPT_ID"));//所属ID
 
 		return "test"; //HTMLファイル名
 	}
@@ -99,9 +99,9 @@ public class HelloController {
  	@RequestMapping(value="/user/create", method=RequestMethod.POST)
  	public String create(SyainDto syainDto) {
  	// userRequestに入力フォームの内容が格納されている
- 		System.out.print(syainDto.getUser_Id());
+ 		System.out.print(syainDto.getEmployee_id());
  		syainRepository.updateSyain(syainDto); // 更新
-
+ 		System.out.print(syainDto);
  		return "test";
  	}
  	

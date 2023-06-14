@@ -25,10 +25,10 @@
 <p th:text="${NAME}">NAME</p>
 <p th:text="${MAIL_ADDRESS}">MAIL_ADDRESS</p> accept-charset="UTF-8" -->
 <form action="/user/create" method="POST" >
-<P><label>社員ID</label><input type="test" name="user_Id" th:value="${user_id}" ></P>
-<P><label>氏名</label><input type="test" name="name" th:value="${NAME}" th:field="*{name}"></P>
+<P><label>社員ID</label><input type="test" name="employee_id" th:value="${employee_id}" ></P>
+<P><label>氏名</label><input type="test" name="employee_name" th:value="${employee_name}" th:field="*{name}"></P>
 <P><label style="width: 145px">所属</label>
-<select name="affiliation">
+<select name="dept_id">
             <option value="00"></option>
             <option
                 th:each="prefectures : ${prefecturesList}"
@@ -40,16 +40,16 @@
         </select>
 </P>
 <p><label>性別</label>
-<input type="radio" name="sex" value="男" th:checked="${Man}"> 男
-<input type="radio" name="sex" value="女"　th:checked="${woman}"> 女
+<input type="radio" name="gender" value="男" th:checked="${Man}"> 男
+<input type="radio" name="gender" value="女"　th:checked="${woman}"> 女
 </p>
 <P><label>電話番号</label><input type="tel" maxlength="11" th:value="${telephone_number}" name="telephone_number"></P>
-<p><label>入社年月日</label><input type="date" id="start" name="calendar_date"
+<p><label>入社年月日</label><input type="date" id="start" name="entry_date"
        th:value="${calendar_date}"
        min="1950-01-01" max="2023-12-31" >
 </p>
 <P><label>年齢</label><input type="number" name="age" th:value="${age}"></P>
-<P><label>メールアドレス</label><input type="email" required th:value="${MAIL_ADDRESS}" name="mail_address"></P>
+<P><label>メールアドレス</label><input type="email" required th:value="${MAIL_ADDRESS}" name="mail_add"></P>
 <P>
 <button type="button" th:class="${hidden}">登録</button>
 <button type="button" >更新</button>
