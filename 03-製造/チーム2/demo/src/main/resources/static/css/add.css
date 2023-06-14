@@ -1,0 +1,22 @@
+@charset "UTF-8";
+.hidden {
+  display: none;
+}
+
+.example{
+    /*コレ*/text-align: Center;
+}
+.example input{
+    margin: 5px;
+     width: 5em;
+  	height:2em;
+}
+label{
+    display: inline-block;
+    text-align: left;
+    width: 150px;
+}
+select{
+      width: 170px;
+      height:1.7em;
+}

@@ -1,0 +1,78 @@
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+<meta charset="UTF-8">
+<title th:text="${title}">Insert title here</title>
+<title>Insert title here</title>
+</head>
+<body>
+<h1 th:text="${title}">title</h1>
+<p>dddd</p>
+<p>aaaa</p>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="/css/add.css" rel="stylesheet"></link>
+<head>
+<meta charset="UTF-8">
+<title th:text="${title}">Insert title here</title>
+</head>
+<body>
+<h1 th:text="${title}">title</h1>
+<!--  
+<p th:text="${NAME}">NAME</p>
+<p th:text="${MAIL_ADDRESS}">MAIL_ADDRESS</p> accept-charset="UTF-8" -->
+<form action="/user/create" method="POST" >
+<P><label>社員ID</label><input type="test" name="user_Id" th:value="${user_id}" ></P>
+<P><label>氏名</label><input type="test" name="name" th:value="${NAME}" th:field="*{name}"></P>
+<P><label style="width: 145px">所属</label>
+<select name="affiliation">
+            <option value="00"></option>
+            <option
+                th:each="prefectures : ${prefecturesList}"
+                th:value="${prefectures.DEPT_ID}"
+                th:text="${prefectures.DEPT_NAME}"
+                th:selected="${prefectures.DEPT_ID == selectedValue}"
+                >
+            </option>
+        </select>
+</P>
+<p><label>性別</label>
+<input type="radio" name="sex" value="男" th:checked="${Man}"> 男
+<input type="radio" name="sex" value="女"　th:checked="${woman}"> 女
+</p>
+<P><label>電話番号</label><input type="tel" maxlength="11" th:value="${telephone_number}" name="telephone_number"></P>
+<p><label>入社年月日</label><input type="date" id="start" name="calendar_date"
+       th:value="${calendar_date}"
+       min="1950-01-01" max="2023-12-31" >
+</p>
+<P><label>年齢</label><input type="number" name="age" th:value="${age}"></P>
+<P><label>メールアドレス</label><input type="email" required th:value="${MAIL_ADDRESS}" name="mail_address"></P>
+<P>
+<button type="button" th:class="${hidden}">登録</button>
+<button type="button" >更新</button>
+<button type="button">削除</button>
+<input type="submit" value="登録" >
+</P>
+</form>
+<!-- These are links to use for next lessons -->
+<!-- こちらは後で使用されるリンクです -->
+<p><a href="#" th:href="@{/inquiry}">Inquiry</a></p>
+<p><a href="#" th:href="@{/survey}">Survey</a></p>
+
+<script type="text/javascript">
+
+function updateInfo(){
+	
+	var a = $("#input1").val;
+	
+	alert(a)
+	
+}
+</script>
+
+
+</body>
+</html>
