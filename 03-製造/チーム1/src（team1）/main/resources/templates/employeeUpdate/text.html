@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>勤怠承認詳細</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
   <style>
     .add-button {
       margin-top: 20px;
     }
-    .holiday {
-      background-color: #ff9f1c;
-    }
-    tr.weekend {
-      background-color: #e3d5ca;
+    .attendance-row.holiday {
+      background-color: orange;
     }
     .buttons-container {
       display: flex;
@@ -23,7 +20,7 @@
     .right-buttons {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: flex-end; 
     }
     .right-buttons button {
       margin-left: 10px;
@@ -52,7 +49,6 @@
     }
   </style>
 </head>
-
 <body>
   <div>
     <img src="/images/logo.png" alt="Logo" style="position: absolute; top: 0; left: 0; width: 250px; height: 100px;">
@@ -62,7 +58,7 @@
         <button>戻る</button>
         <button>却下</button>
         <button>一括選択</button>
-        <button onclick="sendTableData()">承認</button> <!-- 添加 onclick 事件来触发发送表格数据的函数 -->
+        <button>承認</button>
       </div>
     </div>
     <table style="margin-top: 200px;">
@@ -85,107 +81,73 @@
       <tbody id="attendanceBody"></tbody>
     </table>
 
-    <script>
-    function loadAttendanceData() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const date = urlParams.get('date');
+ <script>
+ document.addEventListener('DOMContentLoaded', function() {
+  const params = new URLSearchParams(window.location.search);
+  const date = params.get('date');
+  const attendanceBody = document.getElementById('attendanceBody');
 
-      if (date) {
-        const url = `http://localhost:8080/api/attendance?date=${date}`;
+  fetch(`/api/attendance?date=${date}`)
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(attendance => {
+        const row = document.createElement('tr');
 
-        fetch(url)
-          .then(response => response.json()) // 修改此处，将响应解析为 JSON 格式
-      
-          .then(data => {
-            const jsonData = JSON.parse(data);
-            const tableBody = document.getElementById('attendanceBody');
-            
-             jsonData.forEach(attendance => {
-              const row = document.createElement('tr');
+        const selectCell = document.createElement('td');
+        selectCell.textContent = '选择项';
+        row.appendChild(selectCell);
 
-              const selectCell = document.createElement('td');
-              // 创建一个 checkbox 元素并设置其属性
-              const checkbox = document.createElement('input');
-              checkbox.type = 'checkbox';
-              selectCell.appendChild(checkbox);
-              row.appendChild(selectCell);
+        const calendarDateCell = document.createElement('td');
+        calendarDateCell.textContent = attendance.CALENDAR_DATE;
+        row.appendChild(calendarDateCell);
 
-              const dateCell = document.createElement('td');
-              dateCell.textContent = attendance.calendar_DATE;
-              row.appendChild(dateCell);
+        const weekdayCell = document.createElement('td');
+        weekdayCell.textContent = attendance.WEEKDAY;
+        row.appendChild(weekdayCell);
 
-              const dayOfWeekCell = document.createElement('td');
-              dayOfWeekCell.textContent = attendance.weekday;
-              row.appendChild(dayOfWeekCell);
+        const startTimeCell = document.createElement('td');
+        startTimeCell.textContent = attendance.START_TIME;
+        row.appendChild(startTimeCell);
 
-              const startTimeCell = document.createElement('td');
-              startTimeCell.textContent = attendance.start_TIME;
-              row.appendChild(startTimeCell);
+        const endTimeCell = document.createElement('td');
+        endTimeCell.textContent = attendance.END_TIME;
+        row.appendChild(endTimeCell);
 
-              const endTimeCell = document.createElement('td');
-              endTimeCell.textContent = attendance.end_TIME;
-              row.appendChild(endTimeCell);
+        const restHoursCell = document.createElement('td');
+        restHoursCell.textContent = attendance.REST_HOURS_DAY;
+        row.appendChild(restHoursCell);
 
-              const breakTimeCell = document.createElement('td');
-              breakTimeCell.textContent = attendance.rest_HOURS_DAY;
-              row.appendChild(breakTimeCell);
+        const workingHoursCell = document.createElement('td');
+        workingHoursCell.textContent = attendance.WORKING_HOURS_DAY;
+        row.appendChild(workingHoursCell);
 
-              const workingTimeCell = document.createElement('td');
-              workingTimeCell.textContent = attendance.working_HOURS_DAY;
-              row.appendChild(workingTimeCell);
+        const overtimeHoursCell = document.createElement('td');
+        overtimeHoursCell.textContent = attendance.OVERTIME_HOURS_DAY;
+        row.appendChild(overtimeHoursCell);
 
-              const overtimeCell = document.createElement('td');
-              overtimeCell.textContent = attendance.extra_HOURS_DAY;
-              row.appendChild(overtimeCell);
+        const workContentCell = document.createElement('td');
+        workContentCell.textContent = attendance.WORK_CONTENT;
+        row.appendChild(workContentCell);
 
-              const taskCell = document.createElement('td');
-              taskCell.textContent = attendance.task_CONTENTS;
-              row.appendChild(taskCell);
+        const statusNameCell = document.createElement('td');
+        statusNameCell.textContent = attendance.STATUS_NAME;
+        row.appendChild(statusNameCell);
 
-              const statusCell = document.createElement('td');
-              statusCell.textContent = attendance.working_STATUS;
-              row.appendChild(statusCell);
+        const updateUseridCell = document.createElement('td');
+        updateUseridCell.textContent = attendance.UPDATE_USERID;
+        row.appendChild(updateUseridCell);
 
-              const updaterCell = document.createElement('td');
-              updaterCell.textContent = attendance.update_USER;
-              row.appendChild(updaterCell);
+        const plusContentCell = document.createElement('td');
+        plusContentCell.textContent = attendance.PLUS_CONTENT;
+        row.appendChild(plusContentCell);
 
-              const remarkCell = document.createElement('td');
-              remarkCell.textContent = attendance.remarks;
-              row.appendChild(remarkCell);
-
-              tableBody.appendChild(row);
-            });
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-      }
-    }
-
-    // 页面加载时调用
-    loadAttendanceData();
-
-    function sendTableData() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const date = urlParams.get('date');
-      const tableData = JSON.stringify(jsonData); // 假设 jsonData 是您用于构建表格的 JSON 数据
-      
-      fetch(`http://localhost:8080/api/attendance?date=${date}`, {
-        method: 'POST',
-        body: tableData,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(response => response.json())
-        .then(responseData => {
-          // 处理发送表格数据的响应
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    }
+        attendanceBody.appendChild(row);
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+});
     </script>
   </div>
 </body>
