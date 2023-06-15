@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "TEST01.M_DEPT")
+@Table(name = "group2.M_DEPT")
 //@NamedQuery(name = "myFindByAge", query = "select * from TEST01.M_DEPT")
 public class Prefectures implements Serializable{
     /**

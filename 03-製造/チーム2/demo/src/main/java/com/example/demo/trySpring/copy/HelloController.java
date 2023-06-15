@@ -35,7 +35,8 @@ import java.time.format.DateTimeFormatter;
 @Controller
 @RequiredArgsConstructor
 public class HelloController {
-	
+	@Autowired
+	JdbcTemplate jdbc;
 	@Autowired
 	private final JdbcTemplate jdbcTemplate;
 	@Autowired
@@ -44,8 +45,13 @@ public class HelloController {
         SpringApplication.run(HelloController.class, args);
     }
 	@GetMapping("/hello")
-	public String getHello() {
-		
+	public String getHello(Model model) {
+		//ドロップダウンリスト
+		List<Prefectures> prefecturesList = testService.getPrefecturesAll();
+        model.addAttribute("prefecturesList", prefecturesList);
+        // プルダウンの初期値を設定する場合は指定
+        model.addAttribute("selectedValue", "00");
+		model.addAttribute("update", "hidden");//サーバーがからボタン表示非表示制御
 		return "test";//HTMLファイル名
 	}
 	@GetMapping("/Basic_information_registration")
@@ -86,7 +92,7 @@ public class HelloController {
         System.out.print(date);
 		model.addAttribute("calendar_date", date);//入社年月日          
 		model.addAttribute("title", "Inquiry Form");
-		model.addAttribute("hidden", "hidden");//サーバーがからボタン表示非表示制御
+		model.addAttribute("register", "hidden");//サーバーがからボタン表示非表示制御
 		//ドロップダウンリスト
 		List<Prefectures> prefecturesList = testService.getPrefecturesAll();
         model.addAttribute("prefecturesList", prefecturesList);
@@ -99,9 +105,26 @@ public class HelloController {
  	@RequestMapping(value="/user/create", method=RequestMethod.POST)
  	public String create(SyainDto syainDto) {
  	// userRequestに入力フォームの内容が格納されている
- 		System.out.print(syainDto.getEmployee_id());
- 		syainRepository.updateSyain(syainDto); // 更新
- 		System.out.print(syainDto);
+ 		System.out.println(syainDto.getEmployee_id());
+ 	//SQLでデータを検索する
+ 		try {
+			int count = jdbc.queryForObject("SELECT COUNT(*) FROM group2.T_EMPLOYEE where EMPLOYEE_ID = '"+syainDto.getEmployee_id()+"'", Integer.class);
+			System.out.println(count);
+			if(count==1) {
+				syainRepository.updateSyain(syainDto); // 更新
+				System.out.print(syainDto);
+			}else {
+				System.err.println("何もない");
+				System.out.println("aaaaaaaa");
+				syainRepository.insertSyain(syainDto); // 登録
+				System.out.println(syainDto);
+			}
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+			System.out.println("新規登録時");
+		}
+ 		
  		return "test";
  	}
  	

@@ -1,169 +1,53 @@
-<!DOCTYPE html>
-<link href="/css/add.css" rel="stylesheet"></link>
+<!DOCTYPE HTML>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="NewFile2.css" rel="stylesheet">
-<title>勤怠情報一覧（月別）</title>
+<style>
+.example{
+    /*コレ*/text-align: Center;
+}
+.example input{
+    margin: 5px;
+     width: 5em;
+  	height:2em;
+}
+label{
+    display: inline-block;
+    text-align: left;
+    width: 150px;
+}
+</style>
+<head> 
+    <title>基本情報登録</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<div>
-	<div class="width_50p float_L">
-		<table class="width_50p">
-			<tr>
-				<th><label>社員ID</label></th>
-				<td><input type="test" name="user_Id" th:value="${user_id}" ></td>
-			</tr>
-			<tr>
-				<th>氏名</th>
-				<td>OOOO</td>
-			</tr>
-			<tr>
-				<th>所属部門</th>
-				<td>OOOO</td>
-			</tr>
-		</table>
-		
-		<table class="width_50p">
-			<tr>
-				<th><label for="year">年度</label></th>
-				<td>
-					<form action="#">
-				      <select name="years" id="year" size="1" class="drop_down">
-				        <option value="2023">2023年</option>
-				        <option value="2022">2022年</option>
-				        <option value="2021">2021年</option>
-				        <option value="2020">2020年</option>
-				      </select>
-					</form>
-				</td>
-			</tr>
-		</table>
-	</div>
-	<div class="float_R">
-		<input class="button" type="submit" value="ログアウト" />
-	</div>
-	<div class="clearfix">
-		<table class="width_100p">
-			<tr>
-				<th>月</th>
-				<th>営業日数</th>
-				<th>出勤日数</th>
-				<th>欠勤日数</th>
-				<th>実働時間(H)</th>
-				<th>残業時間(H)</th>
-				<th>コメント</th>
-			</tr>
-			<tr>
-				<th>1</th>
-				<td td:text="users : ${userlist}"></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>2</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>3</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>4</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>5</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>6</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>7</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>8</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>9</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>10</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>11</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<th>12</th>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</table>
-	</div>
+   <!-- <p>Get your greeting <a href="/greeting">here</a></p> --> 
+<P><label>社員ID</label><input type="test" name="X:"></P>
+<P><label>氏名</label><input type="test" name="Y:"></P>
+<P><label>所属</label><input type="test" name="X:"></P>
+<P><label>性別</label><input type="test" name="Y:"></P>
+<P><label>電話番号</label><input type="test" name="X:"></P>
+<P><label>入社年月日</label><input type="test" name="Y:"></P>
+<P><label>年齢</label><input type="test" name="X:"></P>
+<P><label>メールアドレス</label><input type="test" name="Y:"></P>
+<div class="example">
+<input type="submit" value="登録" name="btn">
+<input type="submit" value="閉じる" name="btn">
 </div>
+   
+   
+   
 </body>
 </html>
+<!-- 
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Getting Started: Serving Web Content</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <p th:text="'Hello, ' + ${name} + '!'" />
+</body>
+</html>
+
+ -->

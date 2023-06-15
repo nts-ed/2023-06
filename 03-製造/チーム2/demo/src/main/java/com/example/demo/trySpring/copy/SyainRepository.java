@@ -6,20 +6,40 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import com.example.demo.trySpring.copy.SyainDto;
 import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
+import java.security.SecureRandom;
 
 @Repository
 @RequiredArgsConstructor
 public class SyainRepository {
 	private final JdbcTemplate jdbcTemplate;
-
-	public void insertSyain(List<SyainDto> syainList) {
-		for (SyainDto syain : syainList) {
+	LocalDateTime dateTimeNow = LocalDateTime.now();
+	public void insertSyain(SyainDto syainDto) {
+		String date_conversion="";
+			try {
+				String dateStringsss = syainDto.getEntry_date();
+				//Dateに変換
+		        SimpleDateFormat exDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		        Date sssss = exDateFormat.parse(dateStringsss);
+		        //日付の間にある物を削除
+		        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		        System.out.println(sdf.format(sssss)); 
+		        date_conversion=sdf.format(sssss);
+			}catch(Exception e) {
+				System.out.println(e);
+			}
+//			jdbcTemplate.update(
+//					"INSERT INTO group2.T_EMPLOYEE"
+//					+ "(USER＿ID,NAME) "
+//					+ "Values(?,?)",
+//					syain.getEmployee_id(), syain.getEmployee_name());
 			jdbcTemplate.update(
-					"INSERT INTO TEST01.T_USERS"
-					+ "(USER＿ID,NAME) "
-					+ "Values(?,?)",
-					syain.getEmployee_id(), syain.getEmployee_name());
-		}
+					"INSERT INTO group2.T_EMPLOYEE"
+					+ "(EMPLOYEE_ID,ADMIN_FLG,DEL_FLG,GENDER,TELEPHONE_NUMBER,ENTRY_DATE,AGE,MAIL_ADD,DEPT_ID,EMPLOYEE_NAME,CREATE_DATE,CREATE_USER,UPDATE_DATE,UPDATE_USER,PASSWORD) "
+					+ "Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+					syainDto.getEmployee_id(),0,0,syainDto.getGender(), syainDto.getTelephone_number(),date_conversion,syainDto.getAge(),syainDto.getMail_add(),
+					syainDto.getDept_id(),syainDto.getEmployee_name(),dateTimeNow,syainDto.getEmployee_name(),dateTimeNow,syainDto.getEmployee_name(),generateRandomPassword(8));
+		
 	}
 
 	public void updateSyain(SyainDto syainDto) {
@@ -37,6 +57,7 @@ public class SyainRepository {
 		}catch(Exception e) {
 			System.out.println(e);
 		}
+		//ログインユーザーを更新者として登録はまだできていませんが画面の氏名を代わり登録しています。
 		jdbcTemplate.update(
 				"UPDATE group2.T_EMPLOYEE SET "
 				+ "GENDER='"+syainDto.getGender()+"',"
@@ -45,7 +66,9 @@ public class SyainRepository {
 				+ "AGE='"+syainDto.getAge()+"',"
 				+ "MAIL_ADD='"+syainDto.getMail_add()+"',"
 				+ "DEPT_ID='"+syainDto.getDept_id()+"',"
-				+ "EMPLOYEE_NAME='"+syainDto.getEmployee_name()+"'" 
+				+ "EMPLOYEE_NAME='"+syainDto.getEmployee_name()+"'"
+				+ "UPDATE_DATE='"+dateTimeNow+"'" 
+				+ "UPDATE_USER='"+syainDto.getEmployee_name()+"'" 
 				+ "where EMPLOYEE_ID='"+syainDto.getEmployee_id()+"'");
 	}
 
@@ -53,4 +76,25 @@ public class SyainRepository {
 		jdbcTemplate.update("DELETE FROM syain where id = ?" ,
 				syainList.getEmployee_id());
 	}
+	//パスワードの生成
+	 public static String generateRandomPassword(int len)
+	    {
+	        // ASCII範囲–英数字(0-9、a-z、A-Z)
+	        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	 
+	        SecureRandom random = new SecureRandom();
+	        StringBuilder sb = new StringBuilder();
+	 
+	        //ループの各反復は、指定された文字からランダムに文字を選択します
+	        //ASCII範囲とそれを`StringBuilder`インスタンスに追加します
+	 
+	        for (int i = 0; i < len; i++)
+	        {
+	            int randomIndex = random.nextInt(chars.length());
+	            sb.append(chars.charAt(randomIndex));
+	        }
+	 
+	        return sb.toString();
+	    }
+
 }

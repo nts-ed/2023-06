@@ -51,10 +51,9 @@
 <P><label>年齢</label><input type="number" name="age" th:value="${age}"></P>
 <P><label>メールアドレス</label><input type="email" required th:value="${MAIL_ADDRESS}" name="mail_add"></P>
 <P>
-<button type="button" th:class="${hidden}">登録</button>
-<button type="button" >更新</button>
+<input type="submit" value="登録" th:class="${register}">
+<input type="submit" value="更新" th:class="${update}">
 <button type="button">削除</button>
-<input type="submit" value="登録" >
 </P>
 </form>
 <!-- These are links to use for next lessons -->
