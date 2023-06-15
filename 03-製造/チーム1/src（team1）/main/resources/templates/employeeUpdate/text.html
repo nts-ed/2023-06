@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,7 +41,7 @@
     th, td {
       border: 1px solid black;
       padding: 8px;
-      width: 400px;
+      width: 100px; /* 修改宽度为100px */
       height: 20px;
     }
     tr.weekend {
@@ -50,6 +50,7 @@
   </style>
 </head>
 <body>
+
   <div>
     <img src="/images/logo.png" alt="Logo" style="position: absolute; top: 0; left: 0; width: 250px; height: 100px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
@@ -60,6 +61,7 @@
         <button>一括選択</button>
         <button>承認</button>
       </div>
+    </div>
     </div>
     <table style="margin-top: 200px;">
       <thead>
@@ -78,77 +80,23 @@
           <th>備考</th>
         </tr>
       </thead>
-      <tbody id="attendanceBody"></tbody>
-    </table>
+       <tbody id="attendanceBody">
+   <tr th:each="att : ${attendanceData}" th:class="${att.WEEKDAY == '土' or att.WEEKDAY == '日'} ? 'weekend'">
+      <td><input type="checkbox" class="select-checkbox"></td>
+      <td th:text="${att.CALENDAR_DATE}">日付</td>
+      <td th:text="${att.WEEKDAY}">曜日</td>
+      <td th:text="${att.START_TIME}">出勤時間</td>
+      <td th:text="${att.END_TIME}">退勤時間</td>
+      <td th:text="${att.REST_HOURS_DAY}">休憩時間</td>
+      <td th:text="${att.WORKING_HOURS_DAY}">実働時間</td>
+      <td th:text="${att.OVERTIME_HOURS_DAY}">残業時間</td>
+      <td th:text="${att.WORK_CONTENT}">作業内容</td>
+      <td th:text="${att.STATUS_NAME}">勤務状態</td>
+      <td th:text="${att.UPDATE_USERID}">更新者</td>
+      <td th:text="${att.PLUS_CONTENT}">備考</td>
+    </tr>
+  </tbody>
+</table>
 
- <script>
- document.addEventListener('DOMContentLoaded', function() {
-  const params = new URLSearchParams(window.location.search);
-  const date = params.get('date');
-  const attendanceBody = document.getElementById('attendanceBody');
-
-  fetch(`/api/attendance?date=${date}`)
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(attendance => {
-        const row = document.createElement('tr');
-
-        const selectCell = document.createElement('td');
-        selectCell.textContent = '选择项';
-        row.appendChild(selectCell);
-
-        const calendarDateCell = document.createElement('td');
-        calendarDateCell.textContent = attendance.CALENDAR_DATE;
-        row.appendChild(calendarDateCell);
-
-        const weekdayCell = document.createElement('td');
-        weekdayCell.textContent = attendance.WEEKDAY;
-        row.appendChild(weekdayCell);
-
-        const startTimeCell = document.createElement('td');
-        startTimeCell.textContent = attendance.START_TIME;
-        row.appendChild(startTimeCell);
-
-        const endTimeCell = document.createElement('td');
-        endTimeCell.textContent = attendance.END_TIME;
-        row.appendChild(endTimeCell);
-
-        const restHoursCell = document.createElement('td');
-        restHoursCell.textContent = attendance.REST_HOURS_DAY;
-        row.appendChild(restHoursCell);
-
-        const workingHoursCell = document.createElement('td');
-        workingHoursCell.textContent = attendance.WORKING_HOURS_DAY;
-        row.appendChild(workingHoursCell);
-
-        const overtimeHoursCell = document.createElement('td');
-        overtimeHoursCell.textContent = attendance.OVERTIME_HOURS_DAY;
-        row.appendChild(overtimeHoursCell);
-
-        const workContentCell = document.createElement('td');
-        workContentCell.textContent = attendance.WORK_CONTENT;
-        row.appendChild(workContentCell);
-
-        const statusNameCell = document.createElement('td');
-        statusNameCell.textContent = attendance.STATUS_NAME;
-        row.appendChild(statusNameCell);
-
-        const updateUseridCell = document.createElement('td');
-        updateUseridCell.textContent = attendance.UPDATE_USERID;
-        row.appendChild(updateUseridCell);
-
-        const plusContentCell = document.createElement('td');
-        plusContentCell.textContent = attendance.PLUS_CONTENT;
-        row.appendChild(plusContentCell);
-
-        attendanceBody.appendChild(row);
-      });
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-});
-    </script>
-  </div>
 </body>
 </html>
