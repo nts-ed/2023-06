@@ -1,4 +1,4 @@
-package com.Employee.Controller;
+package com.EmployeeSystem.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.Employee.Servie.Info;
-import com.Employee.Servie.InfoService;
-import com.Employee.dto.InfoForm;
+
+import com.EmployeeSystem.entity.Info;
+import com.EmployeeSystem.service.InfoService;
+
+import jakarta.validation.Valid;
+
+import com.EmployeeSystem.dto.InfoForm;
 
 @Controller
 @RequestMapping("/empl")
@@ -28,7 +32,7 @@ public class InfoController {
 		infoForm.setId(infoService.getNewId());
 		model.addAttribute("infoForm", infoForm);
 
-		return "employee/infoAdd";
+		return "employeeInfo/infoAdd";
 	}
 
 	@GetMapping("Upd/{employees_Id}")
@@ -36,33 +40,36 @@ public class InfoController {
 		InfoForm infoForm = infoService.getInfo(employees_Id);
 		model.addAttribute("infoForm", infoForm);
 
-		return "employee/infoUpdate";
+		return "employeeInfo/infoUpdate";
 	}
 
 	@PostMapping("/add")
-	public String addInfo(@ModelAttribute InfoForm infoForm, BindingResult result, Model model) {
+	public String addInfo(@Validated @ModelAttribute InfoForm infoForm, BindingResult result, Model model) {
 
 		if (result.hasErrors()) {
-
+			
 			model.addAttribute("errors", result.getAllErrors());
 
-			return "employee/infoAdd";
-		}
+			return "employeeInfo/infoAdd";
+			
+		}else {
 		infoService.addInfo(infoForm);
 
-		return "employeeUpdate/backPage";
+		return "employeeInfo/backPage";
+		}
 	}
 
 	@PostMapping("/update")
-	public String updateInfo(@Validated InfoForm infoForm, BindingResult result, Model model) {
+	public String updateInfo(@Validated @ModelAttribute InfoForm infoForm, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 
 			model.addAttribute("errors", result.getAllErrors());
 
-			return "employeeUpdate/infoUpdate";
+			return "employeeInfo/infoUpdate";
 		}
 		infoService.updateInfo(infoForm);
-		return "employee/backPage";
+		
+		return "employeeInfo/backPage";
 
 	}
 
