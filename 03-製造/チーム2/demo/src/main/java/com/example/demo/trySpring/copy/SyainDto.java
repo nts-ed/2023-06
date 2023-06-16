@@ -9,13 +9,30 @@ import lombok.Data;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 
 @Data
 @Entity
 //@AllArgsConstructor
 public class SyainDto implements Serializable{
+//	@Id
+//	//@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
+//	@SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_seq", allocationSize = 1)
+//	@Id
+//    @GeneratedValue(
+//        strategy = GenerationType.SEQUENCE,
+//        generator = "employee_id_seq")
+//    @SequenceGenerator(
+//        name = "employee_id_seq",
+//        sequenceName = "employee_id_seq",
+//        initialValue = 1,
+//        allocationSize = 6)
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_id_gen")
+	@SequenceGenerator(name = "account_id_gen", sequenceName = "account_id_seq", allocationSize = 1)
+	@Column(name="employee_id")
     private String employee_id;//社員ID
     private String employee_name;//社員名称
     private String dept_id;//所属部門ID 

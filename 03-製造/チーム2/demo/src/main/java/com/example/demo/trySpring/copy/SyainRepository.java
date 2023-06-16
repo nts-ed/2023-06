@@ -2,8 +2,12 @@ package com.example.demo.trySpring.copy;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.example.demo.Syain;
 import com.example.demo.trySpring.copy.SyainDto;
 import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
@@ -12,6 +16,7 @@ import java.security.SecureRandom;
 @Repository
 @RequiredArgsConstructor
 public class SyainRepository {
+	@Autowired Syain syain;
 	private final JdbcTemplate jdbcTemplate;
 	LocalDateTime dateTimeNow = LocalDateTime.now();
 	public void insertSyain(SyainDto syainDto) {
@@ -35,10 +40,10 @@ public class SyainRepository {
 //					syain.getEmployee_id(), syain.getEmployee_name());
 			jdbcTemplate.update(
 					"INSERT INTO group2.T_EMPLOYEE"
-					+ "(EMPLOYEE_ID,ADMIN_FLG,DEL_FLG,GENDER,TELEPHONE_NUMBER,ENTRY_DATE,AGE,MAIL_ADD,DEPT_ID,EMPLOYEE_NAME,CREATE_DATE,CREATE_USER,UPDATE_DATE,UPDATE_USER,PASSWORD) "
-					+ "Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-					syainDto.getEmployee_id(),0,0,syainDto.getGender(), syainDto.getTelephone_number(),date_conversion,syainDto.getAge(),syainDto.getMail_add(),
-					syainDto.getDept_id(),syainDto.getEmployee_name(),dateTimeNow,syainDto.getEmployee_name(),dateTimeNow,syainDto.getEmployee_name(),generateRandomPassword(8));
+					+ "(ADMIN_FLG,DEL_FLG,GENDER,TELEPHONE_NUMBER,ENTRY_DATE,AGE,MAIL_ADD,DEPT_ID,EMPLOYEE_NAME,CREATE_DATE,CREATE_USER,UPDATE_DATE,UPDATE_USER,PASSWORD) "
+					+ "Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+					0,0,syainDto.getGender(), syainDto.getTelephone_number(),date_conversion,syainDto.getAge(),syainDto.getMail_add(),
+					syainDto.getDept_id(),syainDto.getEmployee_name(),dateTimeNow,syain.getName(),dateTimeNow,syain.getName(),generateRandomPassword(8));
 		
 	}
 
@@ -57,7 +62,7 @@ public class SyainRepository {
 		}catch(Exception e) {
 			System.out.println(e);
 		}
-		//ログインユーザーを更新者として登録はまだできていませんが画面の氏名を代わり登録しています。
+		int num = Integer.parseInt(syainDto.getEmployee_id());
 		jdbcTemplate.update(
 				"UPDATE group2.T_EMPLOYEE SET "
 				+ "GENDER='"+syainDto.getGender()+"',"
@@ -66,10 +71,10 @@ public class SyainRepository {
 				+ "AGE='"+syainDto.getAge()+"',"
 				+ "MAIL_ADD='"+syainDto.getMail_add()+"',"
 				+ "DEPT_ID='"+syainDto.getDept_id()+"',"
-				+ "EMPLOYEE_NAME='"+syainDto.getEmployee_name()+"'"
-				+ "UPDATE_DATE='"+dateTimeNow+"'" 
-				+ "UPDATE_USER='"+syainDto.getEmployee_name()+"'" 
-				+ "where EMPLOYEE_ID='"+syainDto.getEmployee_id()+"'");
+				+ "EMPLOYEE_NAME='"+syainDto.getEmployee_name()+"',"
+				+ "UPDATE_DATE='"+dateTimeNow+"'," 
+				+ "UPDATE_USER='"+syain.getName()+"'" 
+				+ "where EMPLOYEE_ID="+num);
 	}
 
 	public void deleteSyain(SyainDto syainList) {

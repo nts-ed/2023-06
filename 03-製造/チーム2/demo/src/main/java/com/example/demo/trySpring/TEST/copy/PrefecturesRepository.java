@@ -9,4 +9,5 @@ public interface  PrefecturesRepository extends JpaRepository<Prefectures, Long>
 @Query(value = "select * from group2.M_DEPT ", nativeQuery = true)
 List<Prefectures> findAll();
 
+
 }

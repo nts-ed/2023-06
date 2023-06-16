@@ -19,12 +19,16 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.example.demo.trySpring.TEST.copy.TestService;
+import com.example.demo.Syain;
 import com.example.demo.trySpring.TEST.copy.Prefectures;
 import java.util.List;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.example.demo.trySpring.copy.SyainDto;
+
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.SequenceGenerators;
 
 import java.util.Date;
 import java.text.ParseException;
@@ -35,12 +39,15 @@ import java.time.format.DateTimeFormatter;
 @Controller
 @RequiredArgsConstructor
 public class HelloController {
+	@Autowired Syain syain;
 	@Autowired
 	JdbcTemplate jdbc;
 	@Autowired
 	private final JdbcTemplate jdbcTemplate;
 	@Autowired
 	private TestService testService;
+	@SequenceGenerator(name = "account_id_seq")
+	private String employeeId;
     public static void main(String[] args) {
         SpringApplication.run(HelloController.class, args);
     }
@@ -52,6 +59,7 @@ public class HelloController {
         // プルダウンの初期値を設定する場合は指定
         model.addAttribute("selectedValue", "00");
 		model.addAttribute("update", "hidden");//サーバーがからボタン表示非表示制御
+		model.addAttribute("title", "基本情報新規登録");//画面名
 		return "test";//HTMLファイル名
 	}
 	@GetMapping("/Basic_information_registration")
@@ -72,7 +80,7 @@ public class HelloController {
 	public String test(Model model) {
  		//SQL取得にに仕様する
 		String sql = "SELECT * "
-				+ "FROM group2.T_EMPLOYEE where EMPLOYEE_ID = '00001'";
+				+ "FROM group2.T_EMPLOYEE where EMPLOYEE_ID = '"+syain.getiD()+"'";
 		//取得したDBを格納する
 		Map<String, Object> map = jdbcTemplate.queryForMap(sql);
 		model.addAttribute("employee_id", map.get("EMPLOYEE_ID"));//社員ID
@@ -91,7 +99,7 @@ public class HelloController {
         LocalDate date = LocalDate.parse(dateString, formatter);
         System.out.print(date);
 		model.addAttribute("calendar_date", date);//入社年月日          
-		model.addAttribute("title", "Inquiry Form");
+		model.addAttribute("title", "基本情報更新");//画面名
 		model.addAttribute("register", "hidden");//サーバーがからボタン表示非表示制御
 		//ドロップダウンリスト
 		List<Prefectures> prefecturesList = testService.getPrefecturesAll();
@@ -115,7 +123,7 @@ public class HelloController {
 				System.out.print(syainDto);
 			}else {
 				System.err.println("何もない");
-				System.out.println("aaaaaaaa");
+				System.out.println(employeeId);
 				syainRepository.insertSyain(syainDto); // 登録
 				System.out.println(syainDto);
 			}

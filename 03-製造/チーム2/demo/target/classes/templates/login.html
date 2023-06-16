@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ログイン</title>
+</head>
+<style>
+      h1 {text-align: center;}
+      p {text-align: center;}
+      label { width: 10%; display: inline-block;   }
+   </style>
+<body>
+ <h1> ログイン画面 </h1>
+<form th:action="@{/login}" method="post">
+<p><label>社員ID : </label><input type="text" placeholder="社員ID入力してください" name="employeeID" required></p>
+<p><label>パスワード : </label><input type="password" placeholder="パスワード入力してください" name="password" required></p> 
+    <p th:if="${error}" style="color: red;">[[${error}]]</p>
+<p><button type="submit">ログイン</button> <button type="button" class="cancelbtn"> 閉じる</button></p>
+</form> 
+</body>
+</html>

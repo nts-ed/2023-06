@@ -25,7 +25,7 @@
 <p th:text="${NAME}">NAME</p>
 <p th:text="${MAIL_ADDRESS}">MAIL_ADDRESS</p> accept-charset="UTF-8" -->
 <form action="/user/create" method="POST" >
-<P><label>社員ID</label><input type="test" name="employee_id" th:value="${employee_id}" ></P>
+<P><label>社員ID</label><input type="test" name="employee_id" th:value="${employee_id}" readonly></P>
 <P><label>氏名</label><input type="test" name="employee_name" th:value="${employee_name}" th:field="*{name}"></P>
 <P><label style="width: 145px">所属</label>
 <select name="dept_id">
