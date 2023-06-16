@@ -1,10 +1,11 @@
-package com.Employee.dto;
+package com.EmployeeSystem.dto;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -14,6 +15,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
 import lombok.Data;
 
 
@@ -26,7 +28,7 @@ public class InfoForm implements Serializable{
 
 	private int id;
 	
-	@NotBlank(message="名前を入力してください")
+	@NotEmpty(message="名前を入力してください")
 	@Size(max=100,message="名前は100桁以内で入力してください")
 	private String name;
 	
@@ -35,22 +37,23 @@ public class InfoForm implements Serializable{
 	@Max(value = 99, message = "Age must not exceed 99")
 	private Integer age;
 	
-	@NotBlank(message="性別を入力してください")
+	@NotEmpty(message="性別を入力してください")
 	private String gender;
 	
-	@NotBlank(message="電話番号を入力してください")
+	@NotEmpty(message="電話番号を入力してください")
 	@Pattern(regexp="^(070|080|090)-\\d{4}-\\d{4}$",message="電話番号の形式が正しくありません")
 	private String phone_Number;
 	
 	@Email(message="メールアドレスの形式が正しくありません")
-	@NotBlank(message="メールアドレスを入力してください")
+	@NotEmpty(message="メールアドレスを入力してください")
 	private String email;
 	
-	@NotBlank(message="所属を選択してください")
+	@NotEmpty(message="所属を選択してください")
 	private String dept;
 	
 	@PastOrPresent(message="入社日は正しくありません")
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy/MM/dd", message="日付の形式が正しくありません")
+	@NotNull(message ="入社日を入力してください")
 	private Date entry_Date;
 	
 
