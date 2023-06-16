@@ -28,10 +28,10 @@ public class LoginController {
 	                               HttpSession session,
 	                               Model model) {
 	        Employee employee = employeeRepository.findByEmployeeID(employeeID);
-	        if(employee == null) {
+	        if(employee == null || employee.getDel_flg() == 1) {
 	        	model.addAttribute("error", "社員は存在しません。");
 	        	return "login";
-	        }else if (!employee.getPassword().equals(password)) {
+	        }else if (!employee.getPassword().equals(password) && employee.getDel_flg() == 0) {
 	        	model.addAttribute("error", "パスワードがまちがっています。再度入力しなおしてください。");
 	            return "login"; // Return to the login page with an error message
 	        } else {
