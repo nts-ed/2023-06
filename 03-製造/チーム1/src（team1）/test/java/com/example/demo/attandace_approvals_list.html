@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>勤怠承認一覧</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+
+        }
+
+        table {
+            width: 30%;
+            margin-left: 10%;
+            margin-right: auto;
+            text-align: center;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .headerLeft {
+            color: rgb(201, 155, 5);
+            text-align: left;
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .headerRight {
+            color: rgb(201, 155, 5);
+            text-align: right;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            text-align: center;
+            color: rgb(24, 24, 1);
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar {
+            display: inline;
+            width: 90%;
+            margin-left: 23%;
+            margin-right: 23%;
+            text-align: center;
+            color: rgb(201, 155, 5);
+            font-size: 25px;
+            margin-bottom: 20px;
+
+        }
+
+        #button {
+            border: 0px solid #ddd;
+            padding: 0px;
+            text-align: center;
+        }
+
+        #right {
+            margin-left: auto;
+            margin-right: 10%;
+            text-align: right;
+        }
+
+        #detail {
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        function reset(){
+            document.getElementsByName('employeesId')[0].value = '';
+            document.getElementsByName('employeesName')[0].value = '';
+            document.getElementsByName('deptId')[0].value = '';
+            document.getElementsByName('applyId')[0].value = '';
+            document.getElementsByName('start')[0].value = '';
+            document.getElementsByName('end')[0].value = '';
+        }
+
+        function search() {
+            const employeesId = document.getElementsByName('employeesId')[0].value;
+            const employeesName = document.getElementsByName('employeesName')[0].value;
+            const deptId = document.getElementsByName('deptId')[0].value;
+            const applyId = document.getElementsByName('applyId')[0].value;
+            const start = document.getElementsByName('start')[0].value;
+            const end = document.getElementsByName('end')[0].value;
+
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        updateTable(response);
+                    } else {
+                        console.error('Request failed. Status:', xhr.status);
+                    }
+                }
+            };
+
+            const url = 'http://localhost:8080/attendanceAL' +
+                '?employeesId=' + employeesId +
+                '&employeesName=' + employeesName +
+                '&deptId=' + deptId +
+                '&applyId=' + applyId +
+                '&start=' + start +
+                '&end=' + end;
+
+            xhr.open('GET', url, true);
+            xhr.send();
+        }
+
+        function updateTable(data) {
+            const table = document.getElementById('detail');
+
+            // Clear existing table rows
+            while (table.rows.length > 1) {
+                table.deleteRow(1);
+            }
+
+            // Populate the table with new data
+            for (let i = 0; i < data.length; i++) {
+                const row = table.insertRow(i + 1);
+                const rowData = data[i];
+
+                for (let j = 0; j < rowData.length; j++) {
+                    const cell = row.insertCell(j);
+                    cell.innerHTML = rowData[j];
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+<div>
+    <span class="headerLeft">Symmetrix</span>
+    <span class="sidebar">
+            <span>社員情報&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;勤怠情報&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;勤怠承認</span>
+        </span>
+    <span class="headerRight">所在部門</span>
+    <div class="headerRight">ユーザー名</div>
+    <div style="text-align: right;"><input type="button" value="ログアウト"></div>
+</div>
+
+
+<h1 class="title">勤怠承認一覧</h1>
+<table>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">社員ID</td>
+        <td>
+            <label>
+                <input style="width: 100px" type="text" name="employeesId">
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">所属</td>
+        <td>
+            <label>
+                <select style="width: 100px" name="deptId">
+                    <option value="">--所属を選択ください</option>
+                    <option value="1">人事部</option>
+                    <option value="2">経営部</option>
+                    <option value="3">開発部</option>
+                    <option value="4">事務</option>
+                </select>
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">氏名</td>
+        <td>
+            <label>
+                <input style="width: 100px" type="text" name="employeesName">
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">申請状態</td>
+        <td>
+            <label>
+                <select style="width: 100px" name="applyId">
+                    <option value="">--申請状態を選択ください</option>
+                    <option value="0">未提出</option>
+                    <option value="1">申請中</option>
+                    <option value="2">承認</option>
+                    <option value="3">却下</option>
+                </select>
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">勤務年月</td>
+        <td>
+            <label>
+                <input style="width: 100px" type="month" name="start">
+            </label>
+        </td>
+        <td id="button">&nbsp;&nbsp;~&nbsp;&nbsp;</td>
+        <td>
+            <label>
+                <input style="width: 100px" type="month" name="end">
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="button" value="クリア" onclick="reset()"></td>
+        <td><input type="submit" value="検索" onclick="search()"></td>
+    </tr>
+
+</table>
+
+<table id="detail">
+    <tr>
+        <th>社員ID</th>
+        <th>勤務年月</th>
+        <th>氏名</th>
+        <th>所在部門</th>
+        <th>作業時間</th>
+        <th>休憩時間</th>
+        <th>残業時間</th>
+        <th>欠勤時間</th>
+        <th>申請状態</th>
+    </tr>
+</table>
+
+</body>
+
+</html>
