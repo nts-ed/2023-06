@@ -1,8 +1,8 @@
-package com.EmployeeSystem.repo;
+package com.Employee.repo;
 
 
 
-import com.EmployeeSystem.entity.*;
+import com.Employee.Servie.Info;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
