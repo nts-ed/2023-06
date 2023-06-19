@@ -32,7 +32,7 @@ public class InfoController {
 		infoForm.setId(infoService.getNewId());
 		model.addAttribute("infoForm", infoForm);
 
-		return "employeeInfo/infoAdd";
+		return "employeeUpdate/infoAdd";
 	}
 
 	@GetMapping("Upd/{employees_Id}")
@@ -40,7 +40,7 @@ public class InfoController {
 		InfoForm infoForm = infoService.getInfo(employees_Id);
 		model.addAttribute("infoForm", infoForm);
 
-		return "employeeInfo/infoUpdate";
+		return "employeeUpdate/infoUpdate";
 	}
 
 	@PostMapping("/add")
@@ -50,12 +50,12 @@ public class InfoController {
 			
 			model.addAttribute("errors", result.getAllErrors());
 
-			return "employeeInfo/infoAdd";
+			return "employeeUpdate/infoAdd";
 			
 		}else {
 		infoService.addInfo(infoForm);
 
-		return "employeeInfo/backPage";
+		return "employeeUpdate/backPage";
 		}
 	}
 
@@ -65,11 +65,11 @@ public class InfoController {
 
 			model.addAttribute("errors", result.getAllErrors());
 
-			return "employeeInfo/infoUpdate";
+			return "employeeUpdate/infoUpdate";
 		}
 		infoService.updateInfo(infoForm);
 		
-		return "employeeInfo/backPage";
+		return "employeeUpdate/backPage";
 
 	}
 
