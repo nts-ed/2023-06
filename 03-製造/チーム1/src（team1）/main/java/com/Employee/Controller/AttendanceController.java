@@ -1,62 +1,38 @@
-package com.example.controllers;
+package com.example.demo.controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import com.example.demo.dto.AttendanceDTO;
+import com.example.demo.service.AttendanceService;
+import java.util.List;
 
-/*
 @Controller
+@RequestMapping("/api/attendance")
 public class AttendanceController {
- private final AttendanceRepository attendanceRepository;
 
- @Autowired
- public AttendanceController(AttendanceRepository attendanceRepository) {
-     this.attendanceRepository = attendanceRepository;
- }
+    @Autowired
+    private AttendanceService attendanceService;
 
- @GetMapping("/")
- public String showAttendance(Model model) {
-     LocalDate currentDate = LocalDate.now();
-     List<AttendanceRepository> attendanceList = attendanceRepository.findByDate(currentDate);
-     model.addAttribute("attendanceList", attendanceList);
-     return "attendance";
-*/
-     
-     
-     @Controller
-     public class AttendanceController {
-
-         @GetMapping("/attendance/monthly")
-         public String displayMonthlyAttendance() {
-             // 勤怠情報一覧（月別）画面の表示ロジック
-             return "monthly_attendance";
-         }
-
-         @GetMapping("/attendance/daily")
-         public String displayDailyAttendance() {
-             // 勤怠情報一覧（日別）画面の表示ロジック
-             return "daily_attendance";
-         }
-
-         @GetMapping("/attendance")
-         public String redirectToMonthlyAttendance() {
-             return "redirect:/attendance/monthly";
-         }
-         
-         
-         @GetMapping("/attendance")
-         public String displayAttendance() {
-              // 勤怠情報一覧画面の表示ロジック
-              return "attendance";
-             }
-
-          @GetMapping("/attendance/new")
-          public String displayAttendanceFormForAdd() {
-               // 勤怠情報追加画面の表示ロジック
-              return "attendance_form";
-             }
-
-          @GetMapping("/attendance/edit")
-          public String displayAttendanceFormForEdit() {
-              // 勤怠情報修正画面の表示ロジック
-              return "attendance_form";
-         }
- }
+    @GetMapping
+    public String getAttendanceDataForIdAndDate(@RequestParam("id") Integer id, @RequestParam("date") String date, Model model) {
+        List<AttendanceDTO> attendanceData = attendanceService.getAttendanceDataForIdAndDate(id, date);
+        for (AttendanceDTO attendance : attendanceData) {
+            System.out.println(attendance.toString());
+        }
+        model.addAttribute("attendanceData", attendanceData);
+        return "aa/text"; // 返回逻辑视图名称
+    }
+    @PostMapping("/updateStatus")
+    public ResponseEntity<String> updateAttendanceStatus(@RequestBody AttendanceDTO request) {
+        String action = request.getAction(); // 直接获取前端传递的 action 值
+        attendanceService.updateAttendanceStatus(request.getId(), request.getDate(), action);
+        System.out.println("Received request. id: " + request.getId() + ", date: " + request.getDate() + ", action: " + action);
+        return ResponseEntity.ok("Update successful");
+    }
+}
