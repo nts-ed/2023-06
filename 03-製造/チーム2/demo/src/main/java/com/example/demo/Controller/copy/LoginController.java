@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.demo.Syain;
 import com.example.demo.Controller.copy.Employee;
-import com.example.demo.Controller.copy.EmployeeRepository;
+import com.example.demo.Repository.copy.EmployeeRepository;
 
 import jakarta.servlet.http.HttpSession;
 

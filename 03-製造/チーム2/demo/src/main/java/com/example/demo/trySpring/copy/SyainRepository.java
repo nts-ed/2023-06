@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.Syain;
+import com.example.demo.DTO.copy.MonthDto;
 import com.example.demo.trySpring.copy.SyainDto;
 import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
@@ -101,5 +102,13 @@ public class SyainRepository {
 	 
 	        return sb.toString();
 	    }
-
+	public void insertSyain(List<MonthDto> syainList) {
+			for (MonthDto syain : syainList) {
+				jdbcTemplate.update(
+						"INSERT INTO TEST01.T_USERS"
+						+ "(USER�ｼｿID,NAME) "
+						+ "Values(?,?)",
+						syain.getUser_Id(), syain.getName());
+			}
+		}
 }

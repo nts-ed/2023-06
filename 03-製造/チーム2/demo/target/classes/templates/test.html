@@ -1,23 +1,11 @@
-<!-- <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html>
-<head>
-<meta charset="UTF-8">
-<title th:text="${title}">Insert title here</title>
-<title>Insert title here</title>
-</head>
-<body>
-<h1 th:text="${title}">title</h1>
-<p>dddd</p>
-<p>aaaa</p>
-</body>
-</html> -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <link href="/css/add.css" rel="stylesheet"></link>
 <head>
 <meta charset="UTF-8">
 <title th:text="${title}">Insert title here</title>
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script th:src="@{/js/dialog.js}" defer="defer"></script>
 </head>
 <body>
 <h1 th:text="${title}">title</h1>
@@ -56,15 +44,11 @@
 <P><label>年齢</label><input type="number" name="age" th:value="${age}"></P>
 <P><label>メールアドレス</label><input type="email" required th:value="${MAIL_ADDRESS}" name="mail_add" maxlength="20"></P>
 <P>
-<input type="submit" value="登録" th:class="${register}">
-<input type="submit" value="更新" th:class="${update}">
-<button type="button">削除</button>
+<input type="submit" value="登録" th:class="${register}" >
+<input type="submit" value="更新" th:class="${update}" >
+<button type="button" class="delete-action" onclick="history.back();">戻る</button>
 </P>
 </form>
-<!-- These are links to use for next lessons -->
-<!-- こちらは後で使用されるリンクです -->
-<p><a href="#" th:href="@{/inquiry}">Inquiry</a></p>
-<p><a href="#" th:href="@{/survey}">Survey</a></p>
 
 <script type="text/javascript">
 

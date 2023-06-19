@@ -18,7 +18,8 @@ import com.example.demo.trySpring.TEST.copy.TestService;
 import com.example.demo.trySpring.copy.SyainDto;
 import com.example.demo.trySpring.copy.SyainRepository;
 import lombok.RequiredArgsConstructor;
-
+import com.example.demo.DTO.copy.MonthDto;
+import com.example.demo.trySpring.copy.SyainRepository;
 @Service
 @RequiredArgsConstructor
 public class SyainService {
@@ -31,21 +32,10 @@ public class SyainService {
 
 	@Transactional
 	public void updateData() {
-		// 登録データの作成
-		List<SyainDto> syainList = new ArrayList<>();
+
+		List<MonthDto> syainList = new ArrayList<>();
 		LocalDateTime dateTimeNow = LocalDateTime.now();
 
-//		syainList.add(new SyainDto(
-//				"1", "鈴木", "suzuki","absaeaa@gmail.com",dateTimeNow,dateTimeNow));
-//		syainList.add(new SyainDto(
-//				"2", "田中", "tanaka","ggges@gmail.com",dateTimeNow,dateTimeNow));
-//		syainList.add(new SyainDto(
-//				"3", "佐藤", "sato","afefsa@gmail.com",dateTimeNow,dateTimeNow));
-		//syainList.add(new SyainDto(
-				//1, "鈴木", "suzuki",dateTimeNow,dateTimeNow));
-		//syainRepository.updateSyain(); // 更新
-		//syainRepository.insertSyain(syainList); // 登録
-		//syainRepository.deleteSyain(syainList.get(0)); // 削除
 	}
 
 
@@ -77,6 +67,6 @@ public class SyainService {
 				List<Prefectures> prefecturesList = testService.getPrefecturesAll();
 		        model.addAttribute("prefecturesList", prefecturesList);
 		        // プルダウンの初期値を設定する場合は指定
-		        model.addAttribute("selectedValue", map.get("DEPT_ID"));//所属ID
+		        model.addAttribute("selectedValue", map.get("DEPT_ID"));//所属ID		        
 	}
 }

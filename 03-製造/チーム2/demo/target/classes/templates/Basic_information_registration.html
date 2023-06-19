@@ -1,53 +1,92 @@
-<!DOCTYPE HTML>
-<html>
-<style>
-.example{
-    /*コレ*/text-align: Center;
-}
-.example input{
-    margin: 5px;
-     width: 5em;
-  	height:2em;
-}
-label{
-    display: inline-block;
-    text-align: left;
-    width: 150px;
-}
-</style>
-<head> 
-    <title>基本情報登録</title> 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-   <!-- <p>Get your greeting <a href="/greeting">here</a></p> --> 
-<P><label>社員ID</label><input type="test" name="X:"></P>
-<P><label>氏名</label><input type="test" name="Y:"></P>
-<P><label>所属</label><input type="test" name="X:"></P>
-<P><label>性別</label><input type="test" name="Y:"></P>
-<P><label>電話番号</label><input type="test" name="X:"></P>
-<P><label>入社年月日</label><input type="test" name="Y:"></P>
-<P><label>年齢</label><input type="test" name="X:"></P>
-<P><label>メールアドレス</label><input type="test" name="Y:"></P>
-<div class="example">
-<input type="submit" value="登録" name="btn">
-<input type="submit" value="閉じる" name="btn">
-</div>
-   
-   
-   
-</body>
-</html>
-<!-- 
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head> 
-    <title>Getting Started: Serving Web Content</title> 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-    <p th:text="'Hello, ' + ${name} + '!'" />
-</body>
-</html>
+<%@page contentType= "text/html; charset=UTF-8" %>
 
- -->
+<!DOCTYPE html>
+<link href="/css/Basic_information_registration.css" rel="stylesheet"></link>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="NewFile2.css" rel="stylesheet">
+<title>勤怠情報一覧（月別）</title>
+</head>
+<body>
+<div>
+	<div class="width_50p float_L">
+		<table class="width_50p">
+			<tr>
+				<th>社員ID</th>
+				<td><%= EMPLOYEE_ID %></td>
+			</tr>
+			<tr>
+				<th>氏名</th>
+				<td><%= EMPLOYEE_NAME %></td>
+			</tr>
+			<tr>
+				<th>所属部門</th>
+				<td><%= DEPT_ID %></td>
+			</tr>
+		</table>
+		
+		<table class="width_50p">
+			<tr>
+				<th>
+					<label for="year">年度</label>
+				</th>
+				<td>
+					<form class="margin_0" action="データを取得するURL" method="POST">
+				      <select name="years" id="year" size="1" class="drop_down" onChange="yearChange(event)" >
+				        <option value="2023" >2023年</option>
+				        <option value="2022">2022年</option>
+				        <option value="2021">2021年</option>
+				        <option value="2020">2020年</option>
+				      </select>
+					</form>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="float_R">
+		<a href="#"><input class="button" type="submit" value="ログアウト" /></a>
+	</div>
+	<div class="clearfix">
+		<table class="width_100p">
+			<tr>
+				<th>月</th>
+				<th>営業日数</th>
+				<th>出勤日数</th>
+				<th>欠勤日数</th>
+				<th>実働時間(H)</th>
+				<th>残業時間(H)</th>
+				<th>コメント</th>
+			</tr>
+			<tr th:each="list : ${prefecturesList}">
+				<th th:text="${list.calendarDate}"></th>
+				<td th:text="${list.businessDay}"></td>
+				<td th:text="${list.startDay}"></td>
+				<td th:text="${list.absenceDay}"></td>
+				<td th:text="${list.actualWorkingHours}"></td>
+				<td th:text="${list.overtimeHours}"></td>
+				<td th:text="${list.comment}"></td>
+			</tr>
+			
+		</table>
+	</div>
+</div>
+<script type="text/javascript">
+
+function reqListener() {
+	  console.log(this.responseText);
+	}
+
+function yearChange(e){
+	console.info(e)
+	url ="http://localhost:8080/Basic_information_registration?year=" + e.target.value;
+	window.location.href = url
+ }
+ 
+ $("#year").val("[[${year}]]")
+
+
+</script>
+</body>
+</html>

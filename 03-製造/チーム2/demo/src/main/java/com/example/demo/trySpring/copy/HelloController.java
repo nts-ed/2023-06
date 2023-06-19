@@ -66,10 +66,10 @@ public class HelloController {
 		model.addAttribute("title", "基本情報新規登録");//画面名
 		return syain.getScreenid();//HTMLファイル名
 	}
-	@GetMapping("/Basic_information_registration")
-	public String getHello2() {
-		return "Basic_information_registration";//HTMLファイル名
-	}
+//	@GetMapping("/Basic_information_registration")
+//	public String getHello2() {
+//		return "Basic_information_registration";//HTMLファイル名
+//	}
 	@GetMapping("/greeting")
 	public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
 		model.addAttribute("name", name);
