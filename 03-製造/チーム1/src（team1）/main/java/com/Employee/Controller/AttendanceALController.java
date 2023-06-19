@@ -1,10 +1,12 @@
-package com.Employee.controller;
+package com.sym.controller;
+
 
 import com.sym.entity.AttendanceAL;
 import com.sym.service.AttendanceALService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -15,12 +17,18 @@ public class AttendanceALController {
 	@Autowired
 	private AttendanceALService attendanceALService;
 
-	@PostMapping("/attendanceAL")
-	public List<AttendanceAL> attendanceALList(@RequestBody Integer employeeId, Integer deptId,
-	                                           String employeeName, Integer applyId, String start,
-	                                           String end) {
-		return attendanceALService.attendanceALList(employeeId, deptId, employeeName, applyId, start, end);
+	@GetMapping("/attendanceAL")
+	public List<AttendanceAL> attendanceALList(@RequestParam(defaultValue = "") Integer employeesId,
+	                                            @RequestParam(defaultValue = "") Integer deptId,
+	                                            @RequestParam(defaultValue = "") String employeesName,
+	                                            @RequestParam(defaultValue = "") Integer applyId,
+	                                            @RequestParam(defaultValue = "") String start,
+	                                            @RequestParam(defaultValue = "") String end
+	) {
 
+
+		return attendanceALService.attendanceALList(
+				employeesId,deptId,employeesName,applyId,start,end);
 	}
 
 }
