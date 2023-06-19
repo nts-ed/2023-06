@@ -21,6 +21,10 @@ public class AttendanceDTO {
 	private String STATUS_NAME;
 	private String UPDATE_USERID;
 	private String  PLUS_CONTENT;
-	private int HOLIDAY_FLG;
-	 private String rowClass; // New field for CSS class
+	private Integer HOLIDAY_FLG;
+	private Integer APPLY_ID; 
+	private Integer id;
+    private String date;
+    private String action;
+	 
 	}
