@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>勤怠承認詳細</title>
+  <style>
+    .add-button {
+      margin-top: 20px;
+    }
+    .attendance-row.holiday {
+      background-color: orange;
+    }
+    .buttons-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .right-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end; 
+    }
+    .right-buttons button {
+      margin-left: 10px;
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #ff9f1c;
+      color: #252422;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    table {
+      border-collapse: collapse;
+      width: 80%;
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      width: 400px;
+      height: 20px;
+    }
+    tr.weekend {
+      background-color: #e3d5ca;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <img src="/images/logo.png" alt="Logo" style="position: absolute; top: 0; left: 0; width: 250px; height: 100px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <div style="margin-right: 20px; margin-top: 100px;">社員ID：[99999999]</div>
+      <div class="right-buttons">
+        <button>戻る</button>
+        <button>却下</button>
+        <button>一括選択</button>
+        <button>承認</button>
+      </div>
+    </div>
+    <table style="margin-top: 200px;">
+      <thead>
+        <tr>
+          <th>選択</th>
+          <th>日付</th>
+          <th>曜日</th>
+          <th>出勤時間</th>
+          <th>退勤時間</th>
+          <th>休憩時間</th>
+          <th>実働時間</th>
+          <th>残業時間</th>
+          <th>作業内容</th>
+          <th>勤務状態</th>
+          <th>更新者</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody id="attendanceBody"></tbody>
+    </table>
+
+ <script>
+ document.addEventListener('DOMContentLoaded', function() {
+  const params = new URLSearchParams(window.location.search);
+  const date = params.get('date');
+  const attendanceBody = document.getElementById('attendanceBody');
+
+  fetch(`/api/attendance?date=${date}`)
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(attendance => {
+        const row = document.createElement('tr');
+
+        const selectCell = document.createElement('td');
+        selectCell.textContent = '选择项';
+        row.appendChild(selectCell);
+
+        const calendarDateCell = document.createElement('td');
+        calendarDateCell.textContent = attendance.CALENDAR_DATE;
+        row.appendChild(calendarDateCell);
+
+        const weekdayCell = document.createElement('td');
+        weekdayCell.textContent = attendance.WEEKDAY;
+        row.appendChild(weekdayCell);
+
+        const startTimeCell = document.createElement('td');
+        startTimeCell.textContent = attendance.START_TIME;
+        row.appendChild(startTimeCell);
+
+        const endTimeCell = document.createElement('td');
+        endTimeCell.textContent = attendance.END_TIME;
+        row.appendChild(endTimeCell);
+
+        const restHoursCell = document.createElement('td');
+        restHoursCell.textContent = attendance.REST_HOURS_DAY;
+        row.appendChild(restHoursCell);
+
+        const workingHoursCell = document.createElement('td');
+        workingHoursCell.textContent = attendance.WORKING_HOURS_DAY;
+        row.appendChild(workingHoursCell);
+
+        const overtimeHoursCell = document.createElement('td');
+        overtimeHoursCell.textContent = attendance.OVERTIME_HOURS_DAY;
+        row.appendChild(overtimeHoursCell);
+
+        const workContentCell = document.createElement('td');
+        workContentCell.textContent = attendance.WORK_CONTENT;
+        row.appendChild(workContentCell);
+
+        const statusNameCell = document.createElement('td');
+        statusNameCell.textContent = attendance.STATUS_NAME;
+        row.appendChild(statusNameCell);
+
+        const updateUseridCell = document.createElement('td');
+        updateUseridCell.textContent = attendance.UPDATE_USERID;
+        row.appendChild(updateUseridCell);
+
+        const plusContentCell = document.createElement('td');
+        plusContentCell.textContent = attendance.PLUS_CONTENT;
+        row.appendChild(plusContentCell);
+
+        attendanceBody.appendChild(row);
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+});
+    </script>
+  </div>
+</body>
+</html>
