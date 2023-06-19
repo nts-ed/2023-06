@@ -24,7 +24,12 @@
 <!--  
 <p th:text="${NAME}">NAME</p>
 <p th:text="${MAIL_ADDRESS}">MAIL_ADDRESS</p> accept-charset="UTF-8" -->
-<form action="/user/create" method="POST" >
+<table>
+    <tr th:if="${validationError}" th:each="error : ${validationError}">
+        <td style="color: red;" th:text="${error}"></td>
+    </tr>
+</table>
+<form action="/basic_information" method="POST" >
 <P><label>社員ID</label><input type="test" name="employee_id" th:value="${employee_id}" readonly></P>
 <P><label>氏名</label><input type="test" name="employee_name" th:value="${employee_name}" th:field="*{name}"></P>
 <P><label style="width: 145px">所属</label>
@@ -49,7 +54,7 @@
        min="1950-01-01" max="2023-12-31" >
 </p>
 <P><label>年齢</label><input type="number" name="age" th:value="${age}"></P>
-<P><label>メールアドレス</label><input type="email" required th:value="${MAIL_ADDRESS}" name="mail_add"></P>
+<P><label>メールアドレス</label><input type="email" required th:value="${MAIL_ADDRESS}" name="mail_add" maxlength="20"></P>
 <P>
 <input type="submit" value="登録" th:class="${register}">
 <input type="submit" value="更新" th:class="${update}">

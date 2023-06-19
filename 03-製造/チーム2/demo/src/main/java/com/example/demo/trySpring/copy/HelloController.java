@@ -29,12 +29,16 @@ import com.example.demo.trySpring.copy.SyainDto;
 
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.SequenceGenerators;
+import jakarta.servlet.http.HttpSession;
 
+import org.springframework.validation.BindingResult;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import org.springframework.validation.ObjectError;
+import java.util.ArrayList;
 
 @Controller
 @RequiredArgsConstructor
@@ -60,7 +64,7 @@ public class HelloController {
         model.addAttribute("selectedValue", "00");
 		model.addAttribute("update", "hidden");//サーバーがからボタン表示非表示制御
 		model.addAttribute("title", "基本情報新規登録");//画面名
-		return "test";//HTMLファイル名
+		return syain.getScreenid();//HTMLファイル名
 	}
 	@GetMapping("/Basic_information_registration")
 	public String getHello2() {
@@ -71,49 +75,26 @@ public class HelloController {
 		model.addAttribute("name", name);
 		return "greeting";//HTMLファイル名
 	}
-// 	public HelloController(JdbcTemplate jdbcTemplate) {
-// 		this.jdbcTemplate = jdbcTemplate;
-// 	}
  	private final SyainService syainService;
- 	//以下更新
+ 	//以下登録・更新
  	@GetMapping("/test") // "/sample"以降のURL(GET)
 	public String test(Model model) {
- 		//SQL取得にに仕様する
-		String sql = "SELECT * "
-				+ "FROM group2.T_EMPLOYEE where EMPLOYEE_ID = '"+syain.getiD()+"'";
-		//取得したDBを格納する
-		Map<String, Object> map = jdbcTemplate.queryForMap(sql);
-		model.addAttribute("employee_id", map.get("EMPLOYEE_ID"));//社員ID
-		model.addAttribute("employee_name", map.get("EMPLOYEE_NAME"));//氏名
-		model.addAttribute("age", map.get("age"));//年齢
-		//性別
-		if("男".equals(map.get("GENDER"))) {
-			model.addAttribute("Man", "checked");
-		}else if("女".equals(map.get("GENDER"))) {
-			model.addAttribute("woman", "checked");
-		}
-		model.addAttribute("MAIL_ADDRESS", map.get("MAIL_ADD"));//メールアドレス
-		model.addAttribute("telephone_number", map.get("TELEPHONE_NUMBER"));//電話番号
-		String dateString = map.get("ENTRY_DATE").toString();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        LocalDate date = LocalDate.parse(dateString, formatter);
-        System.out.print(date);
-		model.addAttribute("calendar_date", date);//入社年月日          
-		model.addAttribute("title", "基本情報更新");//画面名
-		model.addAttribute("register", "hidden");//サーバーがからボタン表示非表示制御
-		//ドロップダウンリスト
-		List<Prefectures> prefecturesList = testService.getPrefecturesAll();
-        model.addAttribute("prefecturesList", prefecturesList);
-        // プルダウンの初期値を設定する場合は指定
-        model.addAttribute("selectedValue", map.get("DEPT_ID"));//所属ID
-
+        syainService.search(model);
 		return "test"; //HTMLファイル名
 	}
  	private final SyainRepository syainRepository;
- 	@RequestMapping(value="/user/create", method=RequestMethod.POST)
- 	public String create(SyainDto syainDto) {
- 	// userRequestに入力フォームの内容が格納されている
- 		System.out.println(syainDto.getEmployee_id());
+ 	@RequestMapping(value="/basic_information", method=RequestMethod.POST)
+ 	public String create(@Validated @ModelAttribute SyainDto syainDto, BindingResult result,HttpSession session,Model model) {
+        //エラーメッセージ
+ 		if (result.hasErrors()) {
+            List<String> errorList = new ArrayList<String>();
+            for (ObjectError error : result.getAllErrors()) {
+                errorList.add(error.getDefaultMessage());
+            }
+            model.addAttribute("validationError", errorList);
+            syainService.search(model);
+            return "test";
+        }
  	//SQLでデータを検索する
  		try {
 			int count = jdbc.queryForObject("SELECT COUNT(*) FROM group2.T_EMPLOYEE where EMPLOYEE_ID = '"+syainDto.getEmployee_id()+"'", Integer.class);
@@ -132,8 +113,8 @@ public class HelloController {
 			e.printStackTrace();
 			System.out.println("新規登録時");
 		}
- 		
- 		return "test";
+ 		session.setAttribute("employeeName", syainDto.getEmployee_name());
+ 		return syain.getScreenid();
  	}
  	
  	

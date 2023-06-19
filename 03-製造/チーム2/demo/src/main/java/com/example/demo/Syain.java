@@ -10,10 +10,9 @@ import org.springframework.web.context.annotation.SessionScope;
 public class Syain implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private String iD;
-
-	private String name;
-	
+	private String iD;//社員ID
+	private String name;//氏名
+	private String screenid;//画面ID
 	public String getiD() {
 		return iD;
 	}
@@ -25,6 +24,12 @@ public class Syain implements Serializable {
 	}
 	public String getName() {
 		return name;
+	}
+	public String getScreenid() {
+		return screenid;
+	}
+	public void setScreenid(String screenid) {
+		this.screenid = screenid;
 	}
 
 

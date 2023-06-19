@@ -45,8 +45,10 @@ public class LoginController {
 	            session.setAttribute("employeeName", employee.getEmployeeName());
 	            session.setAttribute("employee_id", employee.getEmployeeID());
 	            if (employee.getAdmin_flg() == 0) {
+	            	syain.setScreenid("employeeDirectory");
 	                return "employeeDirectory";
 	            } else if (employee.getAdmin_flg() == 1) {
+	            	syain.setScreenid("directory");
 	            	return "directory";
 	            }
 	        } 
