@@ -1,10 +1,10 @@
 package Employees.dto;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 public class Register_Update_Dto {
 	int employees_id;
-	Timestamp attendance_date;
+	Date attendance_date;
 	String start_time;
 	String end_time;
 	double rest_hours_day;
@@ -13,7 +13,7 @@ public class Register_Update_Dto {
 	String work_content;
 	
 	public Register_Update_Dto() { super();}
-	public Register_Update_Dto(int employees_id,Timestamp attendance_date, String start_time, 
+	public Register_Update_Dto(int employees_id,Date attendance_date, String start_time, 
 			String end_time, double rest_hours_day, double over_hours_day,int status_id) 
 	{
 		super();
@@ -30,8 +30,8 @@ public class Register_Update_Dto {
 	public int getEmployees_id() { return employees_id; }
 	public void setEmployees_id(int employees_id) { this.employees_id = employees_id; }
 	
-	public Timestamp getAttendanceDate() { return attendance_date; }
-	public void setAttendanceDate(Timestamp attendance_date) { this.attendance_date = attendance_date; }
+	public Date getAttendanceDate() { return attendance_date; }
+	public void setAttendanceDate(Date attendance_date) { this.attendance_date = attendance_date; }
 	
 	public String getStartTime() { return start_time; }
 	public void setStartTime(String start_time) { this.start_time = start_time; }
