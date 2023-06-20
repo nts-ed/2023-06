@@ -66,7 +66,7 @@ public class HelloController {
         model.addAttribute("selectedValue", "00");
 		model.addAttribute("update", "hidden");//サーバーがからボタン表示非表示制御
 		model.addAttribute("title", "基本情報新規登録");//画面名
-		return syain.getScreenid();//HTMLファイル名
+		return "test";//HTMLファイル名
 	}
 //	@GetMapping("/Basic_information_registration")
 //	public String getHello2() {
@@ -104,10 +104,15 @@ public class HelloController {
 			if(count==1) {
 				syainRepository.updateSyain(syainDto); // 更新
 				System.out.print(syainDto);
+//				syain.setName(syainDto.getEmployee_name());
+//				session.removeAttribute("user");
+//		         session.invalidate();
+				session.setAttribute("employeeName", syainDto.getEmployee_name());
 			}else {
 				System.err.println("何もない");
 				System.out.println(employeeId);
 				syainRepository.insertSyain(syainDto); // 登録
+				session.setAttribute("employeeName", syain.getName());
 				System.out.println(syainDto);
 			}
 		} catch (Exception e) {
@@ -115,7 +120,7 @@ public class HelloController {
 			e.printStackTrace();
 			System.out.println("新規登録時");
 		}
- 		session.setAttribute("employeeName", syainDto.getEmployee_name());
+ 		
  		return syain.getScreenid();
  	}
  	
