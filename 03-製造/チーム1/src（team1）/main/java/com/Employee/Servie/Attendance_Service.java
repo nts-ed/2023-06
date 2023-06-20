@@ -39,6 +39,7 @@ public class Attendance_Service {
 		return repository.insert(form);
 	}
 	
+	//勤怠情報一覧（日別）が実装済みの場合、以降の処理は全て消してください。
 	public Register_Update_Dto findById(int employees_id)
 	{
 		try
