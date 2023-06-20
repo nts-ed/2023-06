@@ -106,6 +106,8 @@ public class Register_Update_Controller {
 		return "form";
 	}
 	
+	
+	//勤怠情報一覧（日別）が実装済みの場合、以降の処理は全て消してください。
 	@GetMapping("/{id}")
 	public String showUpdate(@PathVariable int employees_id, Model model)
 	{
