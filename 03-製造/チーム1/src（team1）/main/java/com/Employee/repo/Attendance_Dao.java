@@ -26,6 +26,7 @@ public class Attendance_Dao implements Register_Update_Repository{
 		this.jdbcTemplate = jdbcTemplate;
 	}
 	
+	//更新のSQL文
 	@Override
 	public int update(Put_Form form)
 	{
@@ -60,6 +61,7 @@ public class Attendance_Dao implements Register_Update_Repository{
 		return count;
 	}
 	
+	//登録のSQL文
 	@Override
 	public int insert(Post_Form form)
 	{
@@ -136,6 +138,8 @@ public class Attendance_Dao implements Register_Update_Repository{
 		return list;
 	}
 	
+	//勤怠情報一覧（日別）が実装済みの場合、以降の処理は全て消してください。
+	//IDから検索
 	@Override
 	public Register_Update_Dto findById(int employees_id) throws IncorrectResultSizeDataAccessException
 	{
@@ -164,5 +168,24 @@ public class Attendance_Dao implements Register_Update_Repository{
 		dto.setStatusId((int)result.get("STATUS_ID"));
 		dto.setWorkContent((String)result.get("WORK_CONTENT"));
 		return dto;
+	}
+	
+	//削除のSQL文
+	@Override
+	public int delete(int employees_id)
+	{
+		int count = 0;
+		StringBuilder builder = new StringBuilder();
+		builder.append(" DELETE ");
+		builder.append(" FROM ");
+		builder.append(" T_ATTENDANCE ");
+		builder.append(" WHERE ");
+		builder.append(" EMPLOYEES_ID=:employees_id");
+		
+		String sql = builder.toString();
+		Map<String, Object> param = new HashMap<>();
+		param.put("EMPLOYEES_ID", employees_id);
+		count = jdbcTemplate.update(sql, param);
+		return count;
 	}
 }
