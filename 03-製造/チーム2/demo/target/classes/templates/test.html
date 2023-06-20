@@ -36,7 +36,7 @@
 <input type="radio" name="gender" value="男" th:checked="${Man}"> 男
 <input type="radio" name="gender" value="女"　th:checked="${woman}"> 女
 </p>
-<P><label>電話番号</label><input type="tel" maxlength="11" th:value="${telephone_number}" name="telephone_number"></P>
+<P><label>電話番号</label><input type="tel" maxlength="11" th:value="${telephone_number}" name="telephone_number" pattern="^[0-9]+$"></P>
 <p><label>入社年月日</label><input type="date" id="start" name="entry_date"
        th:value="${calendar_date}"
        min="1950-01-01" max="2023-12-31" >
