@@ -1,7 +1,7 @@
 package Employees.repository;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +79,7 @@ public class Attendance_Dao implements Register_Update_Repository{
 		builder.append(" WORK_CONTENT ) ");
 		builder.append(" VALUES ( ");
 		builder.append("  ?, ");
-		builder.append("  ?,  ");
+		builder.append("  ?, ");
 		builder.append("  ?, ");
 		builder.append("  ?, ");
 		builder.append("  ?, ");
@@ -98,7 +98,6 @@ public class Attendance_Dao implements Register_Update_Repository{
 		param.put("STATUS_ID",form.getStatusForm());
 		param.put("WORK_CONTENT",form.getContentForm());
 		count = jdbcTemplate.update(sql, param);
-		
 		return count;
 	}
 	
@@ -126,7 +125,7 @@ public class Attendance_Dao implements Register_Update_Repository{
 		{
 			Register_Update_Dto dto = new Register_Update_Dto();
 			dto.setEmployees_id((int)result.get("EMPLOYEES_ID"));
-			dto.setAttendanceDate((Timestamp)result.get("ATTENDANCE_DATE"));
+			dto.setAttendanceDate((Date)result.get("ATTENDANCE_DATE"));
 			dto.setStartTime((String)result.get("START_TIME"));
 			dto.setEndtime((String)result.get("END_TIME"));
 			dto.setRestHoursDay((double)result.get("REST_HOURS_DAY"));
@@ -160,7 +159,7 @@ public class Attendance_Dao implements Register_Update_Repository{
 		Map<String, Object> result = jdbcTemplate.queryForMap(sql, param);
 		Register_Update_Dto dto = new Register_Update_Dto();
 		dto.setEmployees_id((int)result.get("EMPLOYEES_ID"));
-		dto.setAttendanceDate((Timestamp)result.get("ATTENDANCE_DATE"));
+		dto.setAttendanceDate((Date)result.get("ATTENDANCE_DATE"));
 		dto.setStartTime((String)result.get("START_TIME"));
 		dto.setEndtime((String)result.get("END_TIME"));
 		dto.setRestHoursDay((double)result.get("REST_HOURS_DAY"));
