@@ -14,5 +14,8 @@ public interface Register_Update_Repository {
 	
 	int insert(Post_Form form);
 	
+	//勤怠情報一覧（日別）が実装済みの場合、以降の処理は全て消してください。
 	Register_Update_Dto findById(int employees_id);
+	
+	int delete(int employees_id);
 }
