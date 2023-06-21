@@ -1,0 +1,98 @@
+<!--<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+</body>
+</html>  -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <style> 
+        .form-table td:nth-child(1) {
+            padding-right: 120px;
+        }
+        .form-table td:nth-child(2) {
+            padding-right: 120px;
+        }
+        h1 {
+            text-align: center;
+        } 
+        .div1 {
+            margin-bottom: 50px;
+        }
+        .div2 {
+            margin-left: 780px;
+        }
+        .table1 {
+            border-collapse: collapse;
+            margin: 0 auto;
+            width: 80%; /* 根据需要调整表格的宽度 */
+        }
+        .table1 th, .table1 td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        .div2 button {
+            margin: 0 5px; /* 根据需要调整按钮之间的间距 */
+        }
+        </style>
+    </head>
+    <body>
+    <h1>社員情報一覧</h1>
+    <form action="" method="post">
+        <table class="form-table" align="center">
+        <div class="div1">
+                <tr>
+                    <td>社員ID<input type="search" name="type"></td>
+                    <td>所属<input type="search" name="type"></td>
+                    <td><button onclick="search()">検索</button></td>
+ 
+                </tr>                            
+        </div>
+        <div align="center">
+            <tr>     
+            <td>入社年月日<input type="date" name="type">～<input type="date" name="type"></td>
+            </tr>                                                   
+        </div>
+        
+    </table>                             
+    </form>
+        <div class="div2" align="center">
+       <!--  onclick="append()" -->
+            <button onclick="location.href='./hello'" >追加</button>
+            <button onclick="clearFields()">削除</button>
+            <button onclick="closeForm()">閉じる</button>            
+        </div>
+        <table class="table1">
+            <tr>
+              <th>選択</th>
+              <th>社員ID</th>
+              <th>入社年月日</th>
+              <th>氏名</th>
+              <th>性別</th>
+              <th>年齢</th>
+              <th>所属</th>
+              <th>メールアドレス</th>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="checked"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+          </table>
+          
+    </body>
+</html>

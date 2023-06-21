@@ -72,10 +72,11 @@ public class HelloController {
 //	public String getHello2() {
 //		return "Basic_information_registration";//HTMLファイル名
 //	}
-	@GetMapping("/greeting")
-	public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-		model.addAttribute("name", name);
-		return "greeting";//HTMLファイル名
+	@GetMapping("/Employees")
+	public String greeting() {
+//		@RequestParam(name="name", required=false, defaultValue="World") String name, Model model
+//		model.addAttribute("name", name);
+		return "Employees";//HTMLファイル名
 	}
  	private final SyainService syainService;
  	//以下登録・更新
@@ -106,10 +107,11 @@ public class HelloController {
 				syainRepository.updateSyain(syainDto); // 更新
 				System.out.print(syainDto);
 			}else {
-				System.err.println("何もない");
-				System.out.println(employeeId);
+				System.err.println(employeeId);
 				syainRepository.insertSyain(syainDto); // 登録
 				System.out.println(syainDto);
+		 		session.setAttribute("employeeName", syain.getName());
+		 		return "Employees";
 			}
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
