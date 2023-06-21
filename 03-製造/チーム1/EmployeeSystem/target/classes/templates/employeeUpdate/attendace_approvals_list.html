@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>勤怠承認一覧</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+
+        }
+
+        table {
+            width: 30%;
+            margin-left: 10%;
+            margin-right: auto;
+            text-align: center;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .headerLeft {
+            color: rgb(201, 155, 5);
+            text-align: left;
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .headerRight {
+            color: rgb(201, 155, 5);
+            text-align: right;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            text-align: center;
+            color: rgb(24, 24, 1);
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar {
+            display: inline;
+            width: 90%;
+            margin-left: 23%;
+            margin-right: 23%;
+            text-align: center;
+            color: rgb(201, 155, 5);
+            font-size: 25px;
+            margin-bottom: 20px;
+
+        }
+
+        #button {
+            border: 0px solid #ddd;
+            padding: 0px;
+            text-align: center;
+        }
+
+        #right {
+            margin-left: auto;
+            margin-right: 10%;
+            text-align: right;
+        }
+
+        #detail {
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        // Get reference to the clear button
+        const clearButton = document.querySelector('input[value="クリア"]');
+
+        // Get reference to the search button
+        const searchButton = document.querySelector('input[type="submit"]');
+
+        // Add click event listener to the clear button
+        clearButton.addEventListener('click', function () {
+            // Clear input fields
+            document.querySelector('input[name="employeeId"]').value = '';
+            document.querySelector('input[name="employeeName"]').value = '';
+            document.querySelector('select').selectedIndex = 0;
+            document.querySelectorAll('input[type="month"]').forEach(function (input) {
+                input.value = '';
+            });
+        });
+
+        // Add click event listener to the search button
+        searchButton.addEventListener('click', function () {
+            const employeeId = document.getElementById("employeeId").value;
+            const deptId= document.getElementById("deptId").value;
+            const employeeName = document.getElementById("employeeName").value;
+            const statusId = document.getElementById("statusId").value;
+            const start = document.getElementById("start").value;
+            const end = document.getElementById("end").value;
+
+            // 使用POST方法发送请求到后端处理页面
+            // 这里需要根据实际情况修改请求地址和参数
+            fetch("/attendanceAL", {
+                method: "POST",
+                body: JSON.stringify({
+                    employeeId: employeeId,
+                    deptIdt: deptId,
+                    employeeName: employeeName,
+                    statusId: statusId,
+                    start: start,
+                    end: end
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(response => response.json())
+                /*.then(data => {
+                    // 在此处处理从后端返回的数据
+                    // 将数据显示在表格中
+                    const table = document.getElementById("detail");
+                    // 清空表格内容
+                    table.innerHTML = "";
+                    // 添加表头
+                    const headerRow = table.insertRow();
+                    headerRow.innerHTML = "<th>社員ID</th><th>勤務年月</th><th>氏名</th><th>所在部門</th><th>作業時間</th><th>休憩時間</th><th>残業時間</th><th>欠勤時間</th><th>申請状態</th>";
+                    // 添加数据行
+                    data.forEach(function(attendanceAL) {
+                        const row = table.insertRow();
+                        row.innerHTML = "<td>" + attendanceAL.employeeId + "</td>" +
+                            "<td>" + attendanceAL.attendanceYm + "</td>" +
+                            "<td>" + attendanceAL.employeeName + "</td>" +
+                            "<td>" + attendanceAL.deptId + "</td>" +
+                            "<td>" + attendanceAL.workHoursMonth + "</td>" +
+                            "<td>" + attendanceAL.restHoursMonth + "</td>" +
+                            "<td>" + attendanceAL.overtimeHoursMonth + "</td>" +
+                            "<td>" + attendanceAL.absenceHoursMonth + "</td>" +
+                            "<td>" + attendanceAL.applyId + "</td>";
+                    });
+                })*/
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+        });
+    </script>
+</head>
+
+<body>
+<div>
+    <span class="headerLeft">Symmetrix</span>
+    <span class="sidebar">
+            <span>社員情報&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;勤怠情報&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;勤怠承認</span>
+        </span>
+    <span class="headerRight">所在部門</span>
+    <div class="headerRight">ユーザー名</div>
+    <div style="text-align: right;"><input type="button" value="ログアウト"></div>
+</div>
+
+
+<h1 class="title">勤怠承認一覧</h1>
+<table>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">社員ID</td>
+        <td><input style="width: 100px" type="text" name="employeeId"></td>
+    </tr>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">所属</td>
+        <td>
+            <select style="width: 100px">
+                <option value="99">--所属を選択ください</option>
+                <option value="1">人事部</option>
+                <option value="2">経営部</option>
+                <option value="3">開発部</option>
+                <option value="4">事務</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+            <td style="color: rgb(5, 73, 98);">氏名</td>
+            <td><input style="width: 100px" type="text" name="employeeName"></td>
+    </tr>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">申請状態</td>
+        <td>
+            <select style="width: 100px">
+                <option value="99">--申請状態を選択ください</option>
+                <option value="0">未提出</option>
+                <option value="1">申請中</option>
+                <option value="2">承認</option>
+                <option value="3">却下</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">勤務年月</td>
+        <td><input style="width: 100px" type="month"></td>
+        <td id="button">&nbsp;&nbsp;~&nbsp;&nbsp;</td>
+        <td><input style="width: 100px" type="month"></td>
+    </tr>
+    <tr>
+        <td><input type="button" value="クリア"></td>
+        <td><input type="submit" value="検索"></td>
+    </tr>

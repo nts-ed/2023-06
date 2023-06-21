@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Table</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <h1>Attendance Table</h1>
+    <table>
+        <tr>
+            <th>营业日数</th>
+            <th>勤务日数</th>
+            <th>欠勤日数</th>
+        </tr>
+        <tr th:each="attendance : ${attendances}">
+            <td th:text="${attendance.allDays}"></td>
+            <td th:text="${attendance.workDays}"></td>
+            <td th:text="${attendance.restDays}"></td>
+        </tr>
+    </table>
+</body>
+</html>
