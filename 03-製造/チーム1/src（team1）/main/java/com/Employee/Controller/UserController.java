@@ -24,23 +24,25 @@ public class UserController{
 //    return dbUser;
 //	}
 //}
+	  
 	    public ResponseEntity<String> login(@RequestBody User user) {
 	        Integer id = user.getId();
 	        String password = user.getPassword();
 
-	        User dbUser = userMapper.getUserById(id);
-	         if (dbUser != null) {
-	            // 用户存在，继续验证密码
-	            if (dbUser.getPassword().equals(password)) {
-	                // 登录成功
-	                return ResponseEntity.ok("success");
+	        User dbUser = userMapper.getUserByIdAndPassword(id, password);
+	        if (dbUser != null) {
+	            // 用户存在，继续验证职位标志
+	            Integer positionFlg = userMapper.getPositionFlgById(id);
+	            if (positionFlg == 1) {
+	                // 管理者登录成功
+	                return ResponseEntity.ok("manager_login_success");
 	            } else {
-	                // 密码错误
-	                return ResponseEntity.ok("incorrect_password");
+	                // 一般员工登录成功
+	                return ResponseEntity.ok("user_login_success");
 	            }
 	        } else {
-	            // 用户不存在
-	            return ResponseEntity.ok("incorrect_id");
+	            // 用户不存在或密码错误
+	            return ResponseEntity.ok("login_failure");
 	        }
 	    }
-}
+	}
