@@ -126,22 +126,23 @@ function login() {
             "Content-Type": "application/json;charset=UTF-8"
         },
         body: JSON.stringify({ id: id, password: password })
-    }).then(res =>res.text()).then(data=>{       
-    	 if (data === "success") {
-             alert("ログイン成功");
-             location.href = '/foword.html';
-         } else if (data === "incorrect_id") {
-             alert("社員IDが違います。");
-         } else if (data === "incorrect_password") {
-             alert("パスワードが違います。");
-         } else {
-             alert("ログイン失敗");
-         }
-     }).catch(error => {
-         console.log(error);
-         alert("ログイン失敗");
-     });
- }
-</script> 
+    }).then(res => res.text()).then(data => {       
+        if (data === "manager_login_success") {
+            alert("管理者ログイン成功");
+            location.href = '/manager.html';
+        } else if (data === "user_login_success") {
+            alert("ログイン成功");
+            location.href = '/user.html';
+        } else if (data === "login_failure") {
+            alert("社員IDまたはパスワードが正しくありません。");
+        } else {
+            alert("ログイン失敗");
+        }
+    }).catch(error => {
+        console.log(error);
+        alert("ログイン失敗");
+    });
+}
+</script>
 </body>
 </html>
