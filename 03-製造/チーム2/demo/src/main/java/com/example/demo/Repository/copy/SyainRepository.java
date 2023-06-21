@@ -45,7 +45,7 @@ public class SyainRepository {
 					+ "Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
 					0,0,syainDto.getGender(), syainDto.getTelephone_number(),date_conversion,syainDto.getAge(),syainDto.getMail_add(),
 					syainDto.getDept_id(),syainDto.getEmployee_name(),dateTimeNow,syain.getName(),dateTimeNow,syain.getName(),generateRandomPassword(8));
-		
+			
 	}
 
 	public void updateSyain(SyainDto syainDto) {

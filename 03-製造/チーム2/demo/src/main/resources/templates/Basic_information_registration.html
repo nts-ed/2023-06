@@ -46,7 +46,7 @@
 		</table>
 	</div>
 	<div class="float_R">
-		<a href="#"><input class="button" type="submit" value="ログアウト" /></a>
+		<a href="login"><input class="button" type="submit" value="ログアウト" /></a>
 	</div>
 	<div class="clearfix">
 		<table class="width_100p">
@@ -60,7 +60,7 @@
 				<th>コメント</th>
 			</tr>
 			<tr th:each="list : ${prefecturesList}">
-				<th th:text="${list.calendarDate}"></th>
+				<th><a href="http://www.google.com" th:text="${list.calendarDate}" ></a></th>
 				<td th:text="${list.businessDay}"></td>
 				<td th:text="${list.startDay}"></td>
 				<td th:text="${list.absenceDay}"></td>

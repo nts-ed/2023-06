@@ -55,7 +55,7 @@ public class Prefectures_Month implements Serializable{
      * 谿区･ｭ譎る俣(H)
      */
     @Column(name = "OVERTIME_HOURS")
-    private double overtimeHours;
+    private String overtimeHours;
     
     /**
      * 繧ｳ繝｡繝ｳ繝�
