@@ -220,17 +220,17 @@
                 let rows = []
                 $.each(res, function (i, item) {
                     rows.push(
-                        '<tr>'
-                        + '<td><a href="#">' + item.employeesId + '</a></td>'
-                        + '<td>' + item.attendanceYm + '</td>'
-                        + '<td>' + item.employeesName + '</td>'
-                        + '<td>' + item.deptName + '</td>'
-                        + '<td>' + item.workingHoursMonth + '</td>'
-                        + '<td>' + item.restHoursMonth + '</td>'
-                        + '<td>' + item.overtimeHoursMonth + '</td>'
-                        + '<td>' + item.absenceHoursMonth + '</td>'
-                        + '<td>' + item.applyId + '</td>'
-                        + '</tr>'
+                         `<tr>
+                            <td><a href="#">${item.employeesId}</a></td>
+                            <td>${item.attendanceYm}</td>
+                            <td>${item.employeesName}</td>
+                            <td>${item.deptName}</td>
+                            <td>${item.workingHoursMonth}</td>
+                            <td>${item.restHoursMonth}</td>
+                            <td>${item.overtimeHoursMonth}</td>
+                            <td>${item.absenceHoursMonth}</td>
+                            <td>${item.applyId}</td>
+                         </tr>`
                     )
                 })
                 $('#tb').empty().append(rows.join(''))
