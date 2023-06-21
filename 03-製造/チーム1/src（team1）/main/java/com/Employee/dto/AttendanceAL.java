@@ -18,11 +18,11 @@ public class AttendanceAL implements Serializable {
 	@Serial
 	private static final long serialVersionUID = 1L;
 
-	@TableId(type = IdType.AUTO)
+@TableId(type = IdType.AUTO)
 	private Integer employeesId;
 	private String attendanceYm;
 	private String employeesName;
-	private Integer deptId;
+	private String deptName;
 	private Integer workingHoursMonth;
 	private Integer restHoursMonth;
 	private Integer overtimeHoursMonth;
