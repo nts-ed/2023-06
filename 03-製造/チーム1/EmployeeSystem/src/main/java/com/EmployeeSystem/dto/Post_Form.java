@@ -1,6 +1,5 @@
-package com.EmployeeSystem.dto;
+package Employees.form;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +7,7 @@ import jakarta.validation.constraints.Size;
 
 public class Post_Form {
 	private int employees_id;
-	Timestamp attendance_date;
+	Date attendance_date;
 	String start_time;
 	String end_time;
 	double rest_hours_day;
@@ -22,9 +21,9 @@ public class Post_Form {
 	@Size(min = 1, max = 250, message = "250文字以内で入力してください。")
 	private String contentForm;
 
-	public Timestamp getAttendance_date() { return attendance_date; }
+	public Date getAttendance_date() { return attendance_date; }
 
-	public void setAttendance_date(Timestamp attendance_date) { this.attendance_date = attendance_date; }
+	public void setAttendance_date(Date attendance_date) { this.attendance_date = attendance_date; }
 
 	public String getStart_time() { return start_time; }
 
