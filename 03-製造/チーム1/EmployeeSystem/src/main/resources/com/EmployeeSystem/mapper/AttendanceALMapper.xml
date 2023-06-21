@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.EmployeeSystem.repo.AttendanceALMapper">
+<select id="attendanceALList" resultType="com.EmployeeSystem.entity.AttendanceAL">
+    select employees_id, attendance_ym, employees_name, dept_name, working_hours_month, rest_hours_month,
+    overtime_hours_month, absence_hours_month, apply_id
+    from (select t_employees.EMPLOYEES_ID,
+    t_attendance_ym.ATTENDANCE_YM,
+    t_employees.EMPLOYEES_NAME,
+    t_employees.DEPT_ID,
+    t_dept.DEPT_NAME,
+    t_attendance_ym.WORKING_HOURS_MONTH,
+    t_attendance_ym.REST_HOURS_MONTH,
+    t_attendance_ym.OVERTIME_HOURS_MONTH,
+    t_attendance_ym.ABSENCE_HOURS_MONTH,
+    t_attendance_ym.APPLY_ID
+    from t_attendance_ym ,t_employees, t_dept
+    where t_employees.EMPLOYEES_ID = t_attendance_ym.EMPLOYEES_ID and t_employees.DEPT_ID = t_dept.DEPT_ID) as
+    attendance
+    <where>
+        <if test="employeesId != null and employeesId != ''">
+            EMPLOYEES_ID = #{employeesId}
+        </if>
+        <if test="deptId != null and deptId != ''">
+            and DEPT_ID = #{deptId}
+        </if>
+        <if test="employeesName != null and employeesName != ''">
+            and EMPLOYEES_NAME like concat('%', #{employeesName}, '%')
+        </if>
+        <if test="applyId != null and applyId != ''">
+            and APPLY_ID = #{applyId}
+        </if>
+        <if test="start != null and start != '' and end != null and end != ''">
+            and ATTENDANCE_YM between #{start} and #{end}
+        </if>
+    </where>
+</select>
+</mapper>

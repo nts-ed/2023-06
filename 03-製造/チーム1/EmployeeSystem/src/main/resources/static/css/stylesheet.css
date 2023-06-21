@@ -1,0 +1,88 @@
+
+.selection-bar {
+	text-align: center;
+}
+
+.selection-bar ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.selection-bar li {
+	display: inline-block;
+	margin: 0 10px;
+}
+
+.selection-bar a {
+	display: inline-block;
+	padding: 10px 20px;
+	background-color: #FF9F1C; /* 橙色背景 */
+	color: #FFF;
+	text-decoration: none;
+	border-radius: 4px;
+	
+}
+
+.selection-bar a:hover {
+	background-color: #E86C00; /* 鼠标悬停时的背景颜色 */
+}
+
+.user-info {
+	text-align: right;
+	/*margin-top:1px;*/
+}
+
+.user-info .department {
+	color: #000;
+	/*margin-top: 5px;
+	margin-bottom: 5px;*/
+}
+
+.user-info .username {
+	color: #000;
+	/*margin-top: 5px;
+	margin-bottom: 5px;*/
+}
+
+.logout-button {
+	background-color: transparent;
+	color: #FF9F1C; /* 橙色字体颜色 */
+	border: none;
+	padding: 0;
+	cursor: pointer;
+}
+
+.logout-button:hover {
+	text-decoration: underline;
+}
+
+
+
+/*main*/
+.table1{
+margin-left:40px;
+border-spacing: 0px 15px;
+
+
+}
+
+
+
+.but{
+	
+	padding: 10px 20px;
+	background-color: #FF9F1C; /* 橙色背景 */
+	color: #FFF;
+	text-decoration: none;
+	border-radius: 4px;
+	border:none;
+	
+	
+}
+.table2{
+	margin-left:600px;
+	border-spacing: 20px 0px;
+}
+
+
