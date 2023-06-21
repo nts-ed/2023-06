@@ -1,0 +1,224 @@
+<!--<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+</body>
+</html>  -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+	<title>勤怠承認一覧</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: center;
+            margin-left: center;
+            margin-right: center;
+            text-align: center;
+            border-collapse: collapse;
+            margin-bottom: center;
+        }
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .title {
+            text-align: center;
+            color: rgb(24, 24, 1);
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        #button {
+            border: 0px solid #ddd;
+            padding: 0px;
+            text-align: center;
+        }
+        #right {
+            margin-left: auto;
+            margin-right: auto;
+            text-align: right;
+        }
+        #detail {
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        // Get reference to the search button
+        const searchButton = document.querySelector('input[type="submit"]'););
+
+        // Add click event listener to the search button
+        searchButton.addEventListener('click', function () {
+            const employeeId = document.getElementById("employeeId").value;
+            const deptId= document.getElementById("deptId").value;
+            const employeeName = document.getElementById("employeeName").value;
+            const statusId = document.getElementById("statusId").value;
+            const start = document.getElementById("start").value;
+            const end = document.getElementById("end").value;
+            fetch("/attendanceAL", {
+                method: "POST",
+                body: JSON.stringify({
+                    employeeId: employeeId,
+                    deptIdt: deptId,
+                    employeeName: employeeName,
+                    statusId: statusId,
+                    start: start,
+                    end: end
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(response => response.json())
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+        });
+    </script>
+</head>
+<h1 class="title">勤怠承認一覧</h1>
+	<td><input type="submit" value="LOGO"></td>
+	<div align="right">（管理者権限）</div>
+	<div style="text-align:right;"><a href="login.html"><input type="button" value="ログアウト"></a></div>
+<table>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">社員ID</td>
+        <td><input style="width: 100px" type="text" name="employeeId"></td>
+    </tr>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">所属</td>
+        <td>
+            <select style="width: 100px">
+                <option value="99">所属を選択ください</option>
+                <option value="1">A部</option>
+                <option value="2">B部</option>
+                <option value="3">C部</option>
+                <option value="4">D部</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+            <td style="color: rgb(5, 73, 98);">氏名</td>
+            <td><input style="width: 100px" type="text" name="employeeName"></td>
+    </tr>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">勤務状態</td>
+    	<td>
+            <select style="width: 100px">
+                <option value="99">勤務状態を選択ください</option>
+                <option value="0">遅刻</option>
+                <option value="1">欠勤</option>
+                <option value="2">休暇</option>
+                <option value="3">出勤中</option>
+                <option value="4">出勤終了</option>
+            </select>    
+    	</td>
+    </tr>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">申請状態</td>
+        <td>
+            <select style="width: 100px">
+                <option value="99">申請状態を選択ください</option>
+                <option value="0">未提出</option>
+                <option value="1">申請中</option>
+                <option value="2">承認</option>
+                <option value="3">却下</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">勤務年月</td>
+        <td><input style="width: 100px" type="month"></td>
+        <td id="button">&nbsp;&nbsp;~&nbsp;&nbsp;</td>
+        <td><input style="width: 100px" type="month"></td>
+    </tr>
+    <tr>
+    	<td><input type="submit" value="検索"></td>
+        <td><a href="directory.html"><input type="button" value="閉じる"></td>
+    </tr>  
+<table class="detail">
+    <thead>
+    <tr>
+        <th>社員ID</th>
+        <th>勤務年月</th>
+        <th>氏名</th>
+        <th>所在部門</th>
+        <th>作業時間</th>
+        <th>休憩時間</th>
+        <th>残業時間</th>
+        <th>欠勤時間</th>
+        <th>申請状態</th>
+    </tr>
+    </thead>
+    <tbody id="tb">
+    </tbody>
+</table>
+<script>
+    function reset() {
+        document.getElementsByName('employeesId')[0].value = '';
+        document.getElementsByName('employeesName')[0].value = '';
+        document.getElementsByName('deptId')[0].value = '';
+        document.getElementsByName('applyId')[0].value = '';
+        document.getElementsByName('start')[0].value = '';
+        document.getElementsByName('end')[0].value = '';
+    }
+    function search() {
+        let employeesId = document.getElementsByName('employeesId')[0].value;
+        let employeesName = document.getElementsByName('employeesName')[0].value;
+        let deptId = document.getElementsByName('deptId')[0].value;
+        let applyId = document.getElementsByName('applyId')[0].value;
+        let start = document.getElementsByName('start')[0].value;
+        let end = document.getElementsByName('end')[0].value;
+        $.ajax({
+            type: 'get',
+            url: 'http://localhost:8080/login',
+            data: {
+                employeesId: employeesId,
+                employeesName: employeesName,
+                deptName: deptId,
+                applyId: applyId,
+                start: start,
+                end: end,
+            },
+            success: function (res) {
+                console.log(res)
+                let rows = []
+                $.each(res, function (i, item) {
+                    rows.push(
+                        '<tr>'
+                        + '<td><a href="#">' + item.employeesId + '</a></td>'
+                        + '<td>' + item.attendanceYm + '</td>'
+                        + '<td>' + item.employeesName + '</td>'
+                        + '<td>' + item.deptName + '</td>'
+                        + '<td>' + item.workingHoursMonth + '</td>'
+                        + '<td>' + item.restHoursMonth + '</td>'
+                        + '<td>' + item.overtimeHoursMonth + '</td>'
+                        + '<td>' + item.absenceHoursMonth + '</td>'
+                        + '<td>' + item.applyId + '</td>'
+                        + '</tr>'
+                    )
+                })
+                $('#tb').empty().append(rows.join(''))
+            }
+        })
+    }
+</script>
+</table>
+</html>
