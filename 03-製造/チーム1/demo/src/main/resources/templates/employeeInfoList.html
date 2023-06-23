@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	
+	<head>
+		<meta charset="UTF-8">
+		<title th:text="${title}">Insert title here</title>
+	</head>
+	
+	<body>
+		<h1 th:text="$title">title</h1>
+		
+		<form method="post" action="@{/confirm}">
+			<label for="ID">社員ID：</label>
+			<input name="ID" id="ID" type="text"><br>
+			
+			<label for="belong">所属部門：</label>
+			<input name="belong" id="belong" type="text"><br>
+			
+			<label for="entry_date">入社日：</label>
+			<input name="entry_date" id="from" type="date">～
+			<input name="entry_date" id="to" type="date"><br>
+			
+			<input value="検索" type="button">
+		</form>
+		<br>
+		<br>
+		<form method="post" action="@{/confirm}">
+			
+			<input name="selectAll" id="selectAll" type="button" value="一括選択">
+			<input name="delete" id="delete" type="button" value="削除">
+			<input name="add" id="add" type="button" value="追加">
+			<br>
+			<br>
+			<table border="1">
+				<tr>
+					<th>選択</th>
+		    		<th>社員ID</th>
+		    		<th>入社年月日</th>
+		    		<th>氏名</th>
+		    		<th>性別</th>
+		    		<th>年齢</th>
+		    		<th>所属</th>
+		    		<th>メールアドレス</th>
+		    		<th>詳細</th>
+				</tr>
+				<tr>
+					<td><input name="checked" id="checked" type="checkbox"></td>
+					<td th:text="*{id}"></td>
+					<td th:text="*{entry_date}"></td>
+					<td th:text="*{name}"></td>
+					<td th:text="*{gender}"></td>
+					<td th:text="*{age}"></td>
+					<td th:text="*{belong}"></td>
+					<td th:text="*{email}"></td>
+					<td><a href="url">修正</a></td>
+				</tr>
+			</table>
+		</form>
+		
+	</body>
+</html>
