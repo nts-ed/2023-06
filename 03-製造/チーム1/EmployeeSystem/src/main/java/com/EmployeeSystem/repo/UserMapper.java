@@ -10,4 +10,6 @@ public interface UserMapper {
 	 User getUserByIdAndPassword(@Param("id") Integer id, @Param("password") String password);
 	 @Select("SELECT * FROM t_employees WHERE EMPLOYEES_ID = #{id}")
 	User getUserById(Integer id);
+	 @Select("SELECT POSITION_FLG FROM t_employees WHERE EMPLOYEES_ID = #{id}")
+	 Integer getPositionFlgById(Integer id);
 }

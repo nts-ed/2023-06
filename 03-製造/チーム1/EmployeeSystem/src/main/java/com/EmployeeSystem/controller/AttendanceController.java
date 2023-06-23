@@ -20,13 +20,13 @@ public class AttendanceController {
     private AttendanceService attendanceService;
 
     @GetMapping
-    public String getAttendanceDataForIdAndDate(@RequestParam("id") Integer id, @RequestParam("date") String date, Model model) {
+    public String getAttendanceDataForIdAndDate(@RequestParam Integer id, @RequestParam String date, Model model) {
         List<AttendanceDTO> attendanceData = attendanceService.getAttendanceDataForIdAndDate(id, date);
         for (AttendanceDTO attendance : attendanceData) {
             System.out.println(attendance.toString());
         }
         model.addAttribute("attendanceData", attendanceData);
-        return "aa/text"; // 返回逻辑视图名称
+        return "attendance/text"; // 返回逻辑视图名称
     }
     @PostMapping("/updateStatus")
     public ResponseEntity<String> updateAttendanceStatus(@RequestBody AttendanceDTO request) {

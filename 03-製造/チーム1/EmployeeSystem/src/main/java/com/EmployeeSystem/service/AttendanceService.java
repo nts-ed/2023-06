@@ -1,5 +1,8 @@
 package com.EmployeeSystem.service;
-
+/*
+ * 機能：勤怠承認詳細画面のService
+ * 作成者：高菁雨
+ */
 import java.util.List;
 
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<meta charset="UTF-8">
+		<title>社員情報一覧</title>
+	</head>
+
+	<body>
+	<div class="header"></div>
+	<div class="main">
+		<div th:if="${errors}">
+			<ul>
+				<li th:each="error : ${errors}"><span
+					th:text="${error.defaultMessage}"></span></li>
+			</ul>
+		</div>
+		<h1>社員情報一覧</h1>
+		<form>
+			<label for="ID">社員ＩＤ： </label>
+			<input name="ID"  id="ID"/><br>
+			<label for="belong">所属：</label>
+			<input name="belong" id="belong"/><br>
+			<label for="date">入社年月日：</label>
+			<input name="date" id="date"/>～<input name="to" id="date"/><br>
+			<input type="button" value="検索" name="date" id="date"/>
+			<br>
+		</form>
+
+		<form>
+			<input type="button" value="一括選択">
+			<input type="button" value="削除">
+			<input type="button" value="追加">
+			<table>
+			<tr>
+	    		<th>選択</th>
+	    		<th>社員ID</th>
+	    		<th>入社年月日</th>
+	    		<th>氏名</th>
+	    		<th>性別</th>
+	    		<th>年齢</th>
+	    		<th>所属</th>
+	    		<th>メールアドレス</th>
+	    		<th>詳細</th>
+	  		</tr>
+	  	<tr>
+	    	<td><input type="checkbox" name="checked"/></td>
+	    	<td></td>
+	    	<td></td>
+	    	<td></td>
+	    	<td></td>
+	    	<td></td>
+	    	<td></td>
+	    	<td></td>
+	    	<td><a href="https://github.com" id="修正">修正</a></td>
+	    </tr>
+		</table>
+		</form>
+		</div>
+	</body>
+</html>

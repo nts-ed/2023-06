@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+<<<<<<< HEAD
+<<<<<<< HEAD
+	<name>EmployeeSystem</name>
+=======
+	<name>test2_EmployeeSystem</name>
+>>>>>>> e80da568a28bd6530bcbae25e2f7302cb0999bd9
+=======
+	<name>test2_EmployeeSystem</name>
+>>>>>>> e80da568a28bd6530bcbae25e2f7302cb0999bd9
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.m2e.core.maven2Nature</nature>
+	</natures>
+</projectDescription>

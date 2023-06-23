@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Data</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Data</h1>
+    <table>
+        <tr>
+            <th>Employee ID</th>
+            <th>Work Hours</th>
+            <th>Overtime Hours</th>
+        </tr>
+        <tr th:each="employee : ${employees}">
+            <td th:text="${employee.employeeId}"></td>
+            <td th:text="${employee.workHours}"></td>
+            <td th:text="${employee.overtimeHours}"></td>
+        </tr>
+    </table>
+    <a href ="attendance.html">勤怠情報一覧（日別）</a>
+</body>
+</html>

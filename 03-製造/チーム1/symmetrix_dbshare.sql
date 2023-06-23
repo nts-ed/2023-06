@@ -3,7 +3,7 @@
 -- 1 社員情報
 create table t_employees
 (
-    EMPLOYEES_ID   int auto_increment comment '社員ID'
+    EMPLOYEES_ID   int comment '社員ID'
         primary key,
     PASSWORD       varchar(15) default '123456' not null comment 'パスワード',
     EMPLOYEES_NAME varchar(100)                 not null comment '社員名',
@@ -37,7 +37,7 @@ create table t_attendance
     ABSENCE_HOURS_DAY  double(4, 1) null comment '欠勤時間',
     STATUS_ID          int          null comment '勤務状態ID',
     WORK_CONTENT       varchar(200) null comment '作業内容',
-    DEL_FLG            int          null comment '削除フラグ  1、削除権ある　0、なし',
+    DEL_FLG            int          null comment '削除フラグ  1、削除権ある 0、なし',
     CREATE_DATE        date         null comment '作成日時',
     CREATE_USERID      int          null comment '作成者',
     UPDATE_DATE        date         null comment '更新日時',

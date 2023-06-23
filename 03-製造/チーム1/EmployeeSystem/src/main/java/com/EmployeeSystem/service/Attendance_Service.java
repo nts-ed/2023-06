@@ -2,7 +2,6 @@ package com.EmployeeSystem.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,6 @@ import com.EmployeeSystem.repo.Register_Update_Repository;
 public class Attendance_Service {
 	private final Register_Update_Repository repository;
 	
-	@Autowired
 	public Attendance_Service(Register_Update_Repository repository)
 	{
 		this.repository = repository;

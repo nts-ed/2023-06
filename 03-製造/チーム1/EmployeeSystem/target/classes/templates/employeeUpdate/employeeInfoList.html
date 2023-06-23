@@ -4,10 +4,24 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>社員情報一覧</title>
+		<link th:href="@{/css/stylesheet.css}" rel="stylesheet" type="text/css" />
 	</head>
 
 	<body>
-	<div class="header"></div>
+	<div class="header">
+	<div class="selection-bar">
+  <ul>
+    <li><a href="employee_info.html">社員情報</a></li>
+    <li><a href="attendance_info.html">勤怠情報</a></li>
+    <li><a href="/attendanceAL">勤怠承認</a></li>
+  </ul>
+</div>
+<div class="user-info">
+  <button class="logout-button">LOGOUT</button>
+  <div class="department">所属部門</div>
+  <div class="username">ユーザー名</div>
+</div>
+	</div>
 	<div class="main">
 		<div th:if="${errors}">
 			<ul>

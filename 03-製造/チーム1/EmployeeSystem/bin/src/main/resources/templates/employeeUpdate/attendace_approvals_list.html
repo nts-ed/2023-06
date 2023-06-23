@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>勤怠承認一覧</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+
+        }
+
+        table {
+            width: 30%;
+            margin-left: 10%;
+            margin-right: auto;
+            text-align: center;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .headerLeft {
+            color: rgb(201, 155, 5);
+            text-align: left;
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .headerRight {
+            color: rgb(201, 155, 5);
+            text-align: right;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            text-align: center;
+            color: rgb(24, 24, 1);
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar {
+            display: inline;
+            width: 90%;
+            margin-left: 23%;
+            margin-right: 23%;
+            text-align: center;
+            color: rgb(201, 155, 5);
+            font-size: 25px;
+            margin-bottom: 20px;
+
+        }
+
+        .detail {
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        #button {
+            border: 0px solid #ddd;
+            padding: 0px;
+            text-align: center;
+        }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+
+<body>
+<div>
+    <span class="headerLeft">Symmetrix</span>
+    <span class="sidebar">
+            <span>社員情報&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;勤怠情報&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;勤怠承認</span>
+        </span>
+    <span class="headerRight">所在部門</span>
+    <div class="headerRight">ユーザー名</div>
+    <div style="text-align: right;"><input type="button" value="ログアウト"></div>
+</div>
+
+
+<h1 class="title">勤怠承認一覧</h1>
+
+<table>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">社員ID</td>
+        <td>
+            <label>
+                <input style="width: 100px" type="text" name="employeesId">
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">所属</td>
+        <td>
+            <label>
+                <select style="width: 100px" name="deptId">
+                    <option value="" selected>--所属を選択ください</option>
+                    <option value="1">人事部</option>
+                    <option value="2">経営部</option>
+                    <option value="3">開発部</option>
+                    <option value="4">事務</option>
+                </select>
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">氏名</td>
+        <td>
+            <label>
+                <input style="width: 100px" type="text" name="employeesName">
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">申請状態</td>
+        <td>
+            <label>
+                <select style="width: 100px" name="applyId">
+                    <option value="" selected>--申請状態を選択ください</option>
+                    <option value="0">未提出</option>
+                    <option value="1">申請中</option>
+                    <option value="2">承認</option>
+                    <option value="3">却下</option>
+                </select>
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td style="color: rgb(5, 73, 98);">勤務年月</td>
+        <td>
+            <label>
+                <input style="width: 100px" type="month" name="start">
+            </label>
+        </td>
+        <td id="button">&nbsp;&nbsp;~&nbsp;&nbsp;</td>
+        <td>
+            <label>
+                <input style="width: 100px" type="month" name="end">
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="reset" value="クリア" onclick="reset()"></td>
+        <td><input type="submit" value="検索" onclick="search()"></td>
+    </tr>
+</table>
+
+<table class="detail">
+    <thead>
+    <tr>
+        <th>社員ID</th>
+        <th>勤務年月</th>
+        <th>氏名</th>
+        <th>所在部門</th>
+        <th>作業時間</th>
+        <th>休憩時間</th>
+        <th>残業時間</th>
+        <th>欠勤時間</th>
+        <th>申請状態</th>
+    </tr>
+    </thead>
+
+    <tbody id="tb">
+
+    </tbody>
+</table>
+<script>
+
+    function reset() {
+        document.getElementsByName('employeesId')[0].value = '';
+        document.getElementsByName('employeesName')[0].value = '';
+        document.getElementsByName('deptId')[0].value = '';
+        document.getElementsByName('applyId')[0].value = '';
+        document.getElementsByName('start')[0].value = '';
+        document.getElementsByName('end')[0].value = '';
+    }
+
+    function search() {
+        let employeesId = document.getElementsByName('employeesId')[0].value;
+        let employeesName = document.getElementsByName('employeesName')[0].value;
+        let deptId = document.getElementsByName('deptId')[0].value;
+        let applyId = document.getElementsByName('applyId')[0].value;
+        let start = document.getElementsByName('start')[0].value;
+        let end = document.getElementsByName('end')[0].value;
+
+
+        $.ajax({
+            type: 'get',
+            url: 'http://localhost:8080/attendanceAL',
+            data: {
+                employeesId: employeesId,
+                employeesName: employeesName,
+                deptName: deptId,
+                applyId: applyId,
+                start: start,
+                end: end,
+            },
+            success: function (res) {
+                console.log(res)
+                let rows = []
+                $.each(res, function (i, item) {
+                    rows.push(
+                         `<tr>
+                            <td><a href="#">${item.employeesId}</a></td>
+                            <td>${item.attendanceYm}</td>
+                            <td>${item.employeesName}</td>
+                            <td>${item.deptName}</td>
+                            <td>${item.workingHoursMonth}</td>
+                            <td>${item.restHoursMonth}</td>
+                            <td>${item.overtimeHoursMonth}</td>
+                            <td>${item.absenceHoursMonth}</td>
+                            <td>${item.applyId}</td>
+                         </tr>`
+                    )
+                })
+                $('#tb').empty().append(rows.join(''))
+            }
+        })
+    }
+
+</script>
+</body>
+
+</html>

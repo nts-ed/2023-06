@@ -1,3 +1,4 @@
+//社員情報登録・更新　作成者：劉金澤
 package com.EmployeeSystem.dto;
 
 import java.io.Serializable;
