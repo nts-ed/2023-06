@@ -49,11 +49,12 @@ public class HelloController {
 	@Autowired
 	JdbcTemplate jdbc;
 	@Autowired
-	private final JdbcTemplate jdbcTemplate;
-	@Autowired
 	private TestService testService;
 	@SequenceGenerator(name = "account_id_seq")
 	private String employeeId;
+ 	private final SyainService syainService;
+ 	private final SyainRepository syainRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(HelloController.class, args);
     }
@@ -66,26 +67,20 @@ public class HelloController {
         model.addAttribute("selectedValue", "00");
 		model.addAttribute("update", "hidden");//サーバーがからボタン表示非表示制御
 		model.addAttribute("title", "基本情報新規登録");//画面名
-		return "test";//HTMLファイル名
+		return "Update_Employee_Information";//HTMLファイル名
 	}
-//	@GetMapping("/Basic_information_registration")
-//	public String getHello2() {
-//		return "Basic_information_registration";//HTMLファイル名
-//	}
 	@GetMapping("/Employees")
 	public String greeting() {
 //		@RequestParam(name="name", required=false, defaultValue="World") String name, Model model
 //		model.addAttribute("name", name);
 		return "Employees";//HTMLファイル名
 	}
- 	private final SyainService syainService;
  	//以下登録・更新
- 	@GetMapping("/test") // "/sample"以降のURL(GET)
+ 	@GetMapping("/Update_Employee_Information") // "/sample"以降のURL(GET)
 	public String test(Model model) {
         syainService.search(model);
-		return "test"; //HTMLファイル名
+		return "Update_Employee_Information"; //HTMLファイル名
 	}
- 	private final SyainRepository syainRepository;
  	@RequestMapping(value="/basic_information", method=RequestMethod.POST)
  	public String create(@Validated @ModelAttribute SyainDto syainDto, BindingResult result,HttpSession session,Model model) {
         //エラーメッセージ
@@ -96,13 +91,11 @@ public class HelloController {
             }
             model.addAttribute("validationError", errorList);
             syainService.search(model);
-            return "test";
+            return "Update_Employee_Information";
         }
  	//SQLでデータを検索する
  		try {
-			int count = jdbc.queryForObject("SELECT COUNT(*) FROM group2.T_EMPLOYEE where EMPLOYEE_ID = '"+syainDto.getEmployee_id()+"'", Integer.class);
-			System.out.println(count);
-			if(count==1) {
+			if(syainService.New_update_decision(syainDto.getEmployee_id())==1) {
 				syain.setName(syainDto.getEmployee_name());
 				syainRepository.updateSyain(syainDto); // 更新
 				System.out.print(syainDto);
@@ -116,7 +109,7 @@ public class HelloController {
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-			System.out.println("新規登録時");
+			System.out.println("エラー最初からやり直してください");
 		}
  		session.setAttribute("employeeName", syain.getName());
  		return syain.getScreenid();
