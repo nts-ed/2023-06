@@ -1,0 +1,82 @@
+
+<!--
+機能:勤怠情報一覧（日別）のHTML
+作成者：長島凱斗　　-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="kadai_text2.css">
+    <title>勤怠情報一覧（日別）</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // 削除ボタンのクリックイベント
+            $('.delete-button').click(function() {
+                var selectedRow = $(this).closest('tr'); // 選択された行を取得
+                selectedRow.remove(); // 選択された行を削除
+            });
+
+                // 一括削除ボタンのクリックイベント
+        $('#bulk-delete-button').click(function() {
+            var selectedRows = $('input[type="checkbox"]:checked').closest('tr'); // 選択された行を取得
+
+            if (selectedRows.length === 0) {
+                alert("選択ボタンを押してください");
+                return;
+            }
+
+            selectedRows.remove(); // 選択された行を削除
+        });
+    });
+</script>
+</head>
+<body>
+    <h1>　　　　　　　　　　　勤怠情報一覧（日別）</h1> 
+    <table>
+        <thead>
+            <tr><th>社員ID　　</th><td th:text="${attendance.employeeId}"></td></tr>
+            <tr><th>社員名　　</th><td th:text="${attendance.name}"></td></tr>
+            <tr><th>部署　　</th><td th:text="${attendance.department}"></td></tr>
+            <tr><th>年度　　</th><td th:text="${attendance.year}"></td></tr>
+            <tr><th>　</th></tr>
+            <tr>
+                <td><div align="right"><button><a href="attendenceAL.html">戻る</button></div></td>
+                <td><div align="right"><button><a href="InfoAdd.html">追加</button></div></td>
+                <td><div align="right"><button id="bulk-delete-button">一括削除</button></div></td>
+            </tr>
+            <tr><th>　</th></tr>
+            <tr>
+                <th>選択　　</th>
+                <th>日付　　</th>
+                <th>曜日　　</th>
+                <th>勤務区分　　</th>
+                <th>出社時間　　</th>
+                <th>退勤時間　　</th>
+                <th>休憩時間　　</th>
+                <th>作業時間　　</th>
+                <th>残業時間　　</th>
+                <th>作業内容　　</th>
+                <th>修正　　</th>
+                <th>削除　　</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="attendance : ${attendanceList}">
+                <td><input type="checkbox"></td>
+                <td th:text="${attendance.date}"></td>
+                <td th:text="${attendance.dayOfWeek}"></td>
+                <td th:text="${attendance.workType}"></td>
+                <td th:text="${attendance.startTime}"></td>
+                <td th:text="${attendance.endTime}"></td>
+                <td th:text="${attendance.breakTime}"></td>
+                <td th:text="${attendance.workTime}"></td>
+                <td th:text="${attendance.overtime}"></td>
+                <td th:text="${attendance.workDescription}"></td>
+                <td><div align="right"><button><a href="InfoUpdate.html">修正</button></td>
+                <td><button class="delete-button">削除</button></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
