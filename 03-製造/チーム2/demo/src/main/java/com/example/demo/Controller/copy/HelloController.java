@@ -69,11 +69,13 @@ public class HelloController {
 		model.addAttribute("title", "基本情報新規登録");//画面名
 		return "Update_Employee_Information";//HTMLファイル名
 	}
+	//日別
 	@GetMapping("/Employees")
-	public String greeting() {
+	public String greeting(Model model) {
 //		@RequestParam(name="name", required=false, defaultValue="World") String name, Model model
 //		model.addAttribute("name", name);
-		return "Employees";//HTMLファイル名
+		syainService.search(model);
+		return "勤怠管理日別";//HTMLファイル名
 	}
  	//以下登録・更新
  	@GetMapping("/Update_Employee_Information") // "/sample"以降のURL(GET)
