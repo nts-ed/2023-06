@@ -69,6 +69,17 @@ public class HelloController {
 		model.addAttribute("title", "基本情報新規登録");//画面名
 		return "Update_Employee_Information";//HTMLファイル名
 	}
+	@GetMapping("/AttendanceApprovalList")
+	public String getAttendanceApprovalList(Model model) {
+		//ドロップダウンリスト
+		List<Prefectures> prefecturesList = testService.getPrefecturesAll();
+        model.addAttribute("prefecturesList", prefecturesList);
+        // プルダウンの初期値を設定する場合は指定
+        model.addAttribute("selectedValue", "00");
+		model.addAttribute("update", "hidden");//サーバーがからボタン表示非表示制御
+		model.addAttribute("title", "基本情報新規登録");//画面名
+		return "AttendanceApprovalList";//HTMLファイル名
+	}
 	//日別
 	@GetMapping("/Employees")
 	public String greeting(Model model) {
