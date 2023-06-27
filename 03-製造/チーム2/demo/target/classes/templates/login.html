@@ -8,14 +8,56 @@
       h1 {text-align: center;}
       p {text-align: center;}
       label { width: 10%; display: inline-block;   }
-   </style>
+form input[type="submit"] {
+  display: inline-block;
+  padding: 10px;
+  background-color: light grey;
+  color: black;
+  float: left;
+  margin:5px;
+  margin-left: 45%;
+}
+.button {
+  display: inline-block;
+  padding: 10px;
+  background-color: light grey;
+  color: black;
+  border: 0;
+  float: left;
+  margin:5px;
+}
+</style>
 <body>
  <h1> ログイン画面 </h1>
-<form th:action="@{/login}" method="post">
-<p><label>社員ID : </label><input type="text" placeholder="社員ID入力してください" name="employeeID" required></p>
+<form th:action="@{/login}" method="post" enctype="multipart/form-data">
+<p><label>社員ID : </label><input type="text" placeholder="社員ID入力してください" name="employeeID" autofocus="autofocus"required></p>
 <p><label>パスワード : </label><input type="password" placeholder="パスワード入力してください" name="password" required></p> 
     <p th:if="${error}" style="color: red;">[[${error}]]</p>
-<p><button type="submit">ログイン</button> <button type="button" class="cancelbtn"> 閉じる</button></p>
-</form> 
+    <p id="errorMsg" style="color: red;"></p>
+
+<input class="button" type="submit" onclick="return validateForm()" value="ログイン" >
+</form>
+<button class="button" id="closeTab" onclick="closeTab()">閉じる</button>
+
+
+<script>
+function validateForm() {
+    var password = document.getElementsByName("password")[0].value;
+    var passwordLength = password.length;
+  
+    if (passwordLength < 8 || passwordLength > 20) {
+        var errorMsg = "パスワードは8文字以上、20文字以下で入力してください。";
+        errorMsg += "（現在は" + passwordLength + "文字です）";
+        document.getElementById("errorMsg").textContent = errorMsg;
+        return false; 
+    }
+    document.getElementById("errorMsg").textContent = "";
+    return true;
+}
+function closeTab() {
+ 	window.open('', '_self');
+    window.close();
+}
+</script>
 </body>
 </html>

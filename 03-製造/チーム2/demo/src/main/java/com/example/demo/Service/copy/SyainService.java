@@ -16,6 +16,9 @@ import org.springframework.ui.Model;
 import com.example.demo.Syain;
 import com.example.demo.DTO.copy.Prefectures;
 import com.example.demo.Service.copy.TestService;
+
+import io.micrometer.common.util.StringUtils;
+
 import com.example.demo.DTO.copy.SyainDto;
 import com.example.demo.Repository.copy.SyainRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +32,8 @@ public class SyainService {
 	@Autowired
 	private final JdbcTemplate jdbcTemplate;
 	private final SyainRepository syainRepository;
-
+	@Autowired
+	JdbcTemplate jdbc;
 	@Transactional
 	public void updateData() {
 
@@ -40,6 +44,9 @@ public class SyainService {
 
 
 	public void search(Model model) {
+		if(StringUtils.isBlank(syain.getiD())) {
+			return;
+		}
 		//SQL取得にに仕様する
 				String sql = "SELECT * "
 						+ "FROM group2.T_EMPLOYEE where EMPLOYEE_ID = '"+syain.getiD()+"'";
@@ -69,4 +76,11 @@ public class SyainService {
 		        // プルダウンの初期値を設定する場合は指定
 		        model.addAttribute("selectedValue", map.get("DEPT_ID"));//所属ID		        
 	}
+	
+	public int New_update_decision(String Employee_id) {
+		int count = jdbc.queryForObject("SELECT COUNT(*) FROM group2.T_EMPLOYEE where EMPLOYEE_ID = '"+Employee_id+"'", Integer.class);
+		System.out.println(count);
+		return count;
+	}
+	
 }
