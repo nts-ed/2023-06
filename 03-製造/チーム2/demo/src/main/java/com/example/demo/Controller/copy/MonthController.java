@@ -45,6 +45,7 @@ public class MonthController {
 		model.addAttribute("employee_id", map.get("EMPLOYEE_ID"));//社員ID
 		model.addAttribute("employee_name", map.get("EMPLOYEE_NAME"));//氏名
         model.addAttribute("dept_name", map2.get("DEPT_NAME"));//所属
+        System.out.println(map2.get("DEPT_NAME"));
 		List<Prefectures_Month> prefecturesList = testService.getPrefecturesAll(year);
         model.addAttribute("prefecturesList", prefecturesList);
         model.addAttribute("year",year);
