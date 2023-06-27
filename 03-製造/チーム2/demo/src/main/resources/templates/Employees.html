@@ -47,7 +47,7 @@
     </head>
     <body>
     <h1>社員情報一覧</h1>
-    <form action="" method="post">
+    <form action="/emp/updateSuccess" method="post">
         <table class="form-table" align="center">
         <div class="div1">
                 <tr>
@@ -84,7 +84,7 @@
             </tr>
             <tr>
                 <td><input type="checkbox" name="checked"></td>
-                <td></td>
+                <td><input type="checkbox" name="checked"　th:value="${employee_id}"></td>
                 <td></td>
                 <td></td>
                 <td></td>

@@ -60,7 +60,7 @@
 				<th>コメント</th>
 			</tr>
 			<tr th:each="list : ${prefecturesList}">
-				<th><a href="http://www.google.com" th:text="${list.calendarDate}" ></a></th>
+				<th><a href="/Employees" th:text="${list.calendarDate}" ></a></th>
 				<td th:text="${list.businessDay}"></td>
 				<td th:text="${list.startDay}"></td>
 				<td th:text="${list.absenceDay}"></td>
